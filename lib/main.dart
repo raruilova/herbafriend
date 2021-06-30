@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
+import 'package:herbafriend/src/pages/register.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart'
     show HerbaFriendService;
 import 'package:herbafriend/src/widget/herbafriend_card.dart';
@@ -83,6 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       children:
                           _result.map((e) => HerbaFriendCard(e)).toList())),
             ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.green,
+        onPressed: () => _crearReceta(context),
+      ),
     );
   }
 
@@ -92,5 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _result = value;
       setState(() {});
     });
+  }
+
+  void _crearReceta(BuildContext context) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Register()));
   }
 }
