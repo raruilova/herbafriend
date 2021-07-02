@@ -10,7 +10,7 @@ class HerbaFriendService {
   Future<List<Recipes>> getRecipes() async {
     List<Recipes> items = [];
     try {
-      var uri = Uri.https("back-hierbaf-heroku.herokuapp.com", "/recipes");
+      var uri = Uri.https("backhebrafriend.herokuapp.com", "/recipes");
       final resp = await http.get(uri);
       if (resp.body.isEmpty) return items;
       List<dynamic> jsonList = json.decode(resp.body);

@@ -12,7 +12,7 @@ class Recipes {
     this.preparation,
   });
 
-  int? id;
+  String? id;
   String? name;
   String? ingredients;
   String? preparation;

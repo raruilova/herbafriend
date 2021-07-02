@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/main.dart';
-import 'package:herbafriend/src/model/herbafriend_model.dart';
-import 'package:herbafriend/src/pages/favorites_page.dart';
-import 'package:herbafriend/src/pages/recipe_add_page.dart';
+import 'package:herbafriend/src/pages/register.dart';
+import 'package:herbafriend/src/utils/enums.dart';
 
 class MainPage extends StatefulWidget {
-  final Recipes recipes;
-  MainPage(this.recipes);
+  MainPage({Key? key, required this.titulo}) : super(key: key);
+  final String titulo;
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -14,84 +13,73 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetsChildren = <Widget>[
-    FavoritesPage(), //1
-    RecipeAddPage() //2
-  ];
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("inicio del Estado");
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            widget.recipes.name.toString(),
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(_selectedIndex == 0
+            ? widget.titulo
+            : menuOptions[_selectedIndex].label),
+      ),
+      drawer: Drawer(
+          child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.green),
+            child: Text(
+              "Bienvenid@",
+              style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: colorScheme.surface,
-          selectedItemColor: colorScheme.onSurface,
-          unselectedItemColor: colorScheme.onSurface.withOpacity(.60),
-          selectedLabelStyle: textTheme.caption,
-          unselectedLabelStyle: textTheme.caption,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              title: Text('Favoritos'),
-              icon: Icon(Icons.favorite),
-            ),
-            BottomNavigationBarItem(
-              title: Text('Añadir'),
-              icon: Icon(Icons.add),
-            ),
-          ],
-        ),
-        body: Stack(
-          children: [
-            Container(
-              child: _widgetsChildren.elementAt(_selectedIndex),
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 70.0),
-                ),
-                Text(
-                  "Ingredientes: ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
-                ),
-                Text(
-                  widget.recipes.ingredients.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20.0),
-                ),
-                Text(
-                  "Preparación: ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
-                Text(
-                  widget.recipes.preparation.toString(),
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ],
+          ListTile(
+            title: Text("Remedios"),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      )),
+      body: Container(
+          margin: EdgeInsets.symmetric(horizontal: 14.0),
+          child: contentWidget[_selectedIndex]),
+      floatingActionButton: _selectedIndex == 0
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Register(),
+                    ));
+              },
+              child: const Icon(Icons.add),
             )
-          ],
-        ));
+          : null,
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: (value) {
+            _selectedIndex = value;
+            setState(() {
+              print("cambio de estado");
+            });
+          },
+          items: menuOptions
+              .map((e) =>
+                  BottomNavigationBarItem(icon: Icon(e.icon), label: e.label))
+              .toList()),
+    );
   }
 }
