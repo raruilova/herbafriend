@@ -1,6 +1,11 @@
+import 'dart:html';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:herbafriend/main.dart';
+import 'package:herbafriend/src/model/categories.dart';
 import 'package:herbafriend/src/pages/register.dart';
+import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/utils/enums.dart';
 
 class MainPage extends StatefulWidget {
@@ -14,11 +19,16 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
+  final CategoryService _service = CategoryService();
+
+  List<CategoryRecipe> _result = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print("inicio del Estado");
+    _loadResult();
   }
 
   @override
@@ -36,21 +46,24 @@ class _MainPageState extends State<MainPage> {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(color: Colors.green),
-            child: Text(
-              "Bienvenid@",
-              style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-              textAlign: TextAlign.center,
+            child: SingleChildScrollView(
+              child: Text(
+                "Bienvenid@",
+                style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-          ListTile(
-            title: Text("Remedios"),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          )
+          Column(
+              children: _result
+                  .map((e) => ListTile(
+                        onTap: () {},
+                        title: Text(e.name.toString()),
+                      ))
+                  .toList())
         ],
       )),
       body: Container(
@@ -81,5 +94,13 @@ class _MainPageState extends State<MainPage> {
                   BottomNavigationBarItem(icon: Icon(e.icon), label: e.label))
               .toList()),
     );
+  }
+
+  _loadResult() {
+    _service.getCategory().then((value) {
+      print(value);
+      _result = value;
+      setState(() {});
+    });
   }
 }
