@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:herbafriend/src/pages/main_page.dart';
+import 'package:herbafriend/src/widget/login_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MainPage(titulo: 'Recetas'),
+      home: Login(),
     );
   }
 }

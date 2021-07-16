@@ -1,7 +1,10 @@
+import 'dart:html';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:herbafriend/main.dart';
 import 'package:herbafriend/src/pages/register.dart';
 import 'package:herbafriend/src/utils/enums.dart';
+import 'package:herbafriend/src/widget/login_widget.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key, required this.titulo}) : super(key: key);
@@ -16,7 +19,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print("inicio del Estado");
   }
@@ -50,7 +52,22 @@ class _MainPageState extends State<MainPage> {
             onTap: () {
               Navigator.pop(context);
             },
-          )
+          ),
+          Divider(
+            color: Colors.white,
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Login(),
+                    ));
+              },
+              child: Text(
+                'Salir',
+                style: TextStyle(fontSize: 20),
+              ))
         ],
       )),
       body: Container(

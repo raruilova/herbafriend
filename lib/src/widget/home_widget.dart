@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
-import 'package:herbafriend/src/pages/main_page.dart';
-import 'package:herbafriend/src/pages/register.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart'
     show HerbaFriendService;
 import 'package:herbafriend/src/widget/herbafriend_card.dart';
-import 'package:flutter/services.dart';
 
 class HomeWidget extends StatefulWidget {
   HomeWidget({Key? key}) : super(key: key);
@@ -21,7 +18,6 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadResult();
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
-import 'package:herbafriend/src/pages/main_page.dart';
 import 'package:herbafriend/src/pages/recipes_list.dart';
 
 class HerbaFriendCard extends StatelessWidget {
