@@ -4,20 +4,21 @@
 
 import 'dart:convert';
 
-Recipes recipesFromJson(String str) => Recipes.fromJson(json.decode(str));
+CategoryRecipe recipesFromJson(String str) =>
+    CategoryRecipe.fromJson(json.decode(str));
 
-String recipesToJson(Recipes data) => json.encode(data.toJson());
+String recipesToJson(CategoryRecipe data) => json.encode(data.toJson());
 
-class Recipes {
-  Recipes({
+class CategoryRecipe {
+  CategoryRecipe({
     this.id,
     this.name,
   });
 
-  int? id;
+  String? id;
   String? name;
 
-  factory Recipes.fromJson(Map<String, dynamic> json) => Recipes(
+  factory CategoryRecipe.fromJson(Map<String, dynamic> json) => CategoryRecipe(
         id: json["id"],
         name: json["name"],
       );
