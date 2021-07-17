@@ -14,7 +14,7 @@ class _RegisterState extends State<Register> {
 
   List<CategoryRecipe> _result = [];
 
-  String _dropdownValue = 'ff';
+  var _dropdownValue;
 
   @override
    void initState() {
@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
                 Container(
                   
                     child: DropdownButton(
-                      //value: _dropdownValue,
+                      value: _dropdownValue,
                       items: _result
                       .map((e) => DropdownMenuItem(
                         value: e.name.toString(),
