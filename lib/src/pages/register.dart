@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:herbafriend/src/model/categories.dart';
+import 'package:herbafriend/src/service/category_service.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -8,7 +10,18 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final CategoryService _service = CategoryService();
+
+  List<CategoryRecipe> _result = [];
+
+  String _dropdownValue = 'ff';
+
   @override
+   void initState() {
+    super.initState();
+    print("inicio del Estado");
+    _loadResult();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,10 +63,29 @@ class _RegisterState extends State<Register> {
                   padding: EdgeInsets.only(top: 8.0),
                 ),
                 Divider(),
-                TextField(
-                  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.category), labelText: 'Categoria'),
+                //TextField(
+                //  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                //  decoration: InputDecoration(
+                //      icon: Icon(Icons.category), labelText: 'Categoria'),
+                //),
+                Container(
+                  
+                    child: DropdownButton(
+                      //value: _dropdownValue,
+                      items: _result
+                      .map((e) => DropdownMenuItem(
+                        value: e.name.toString(),
+                        child: Text(e.name.toString()),
+                      )).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _dropdownValue = value.toString();
+                        },
+                        
+                        );
+                      },
+                      hint: Text('Seleccione una categoria'),
+                    ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
@@ -71,5 +103,12 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+  _loadResult() {
+    _service.getCategory().then((value) {
+      print(value.toString());
+      _result = value;
+      setState(() {});
+    });
   }
 }
