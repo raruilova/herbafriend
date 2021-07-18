@@ -13,7 +13,7 @@ class Recipes {
     this.ingredients,
     this.preparation,
   });
-  Recipes.create(this.name, this.ingredients, this.preparation);
+  Recipes.create();
 
   String? id;
   String? name;
