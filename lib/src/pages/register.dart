@@ -29,7 +29,7 @@ class _RegisterState extends State<Register> {
     super.initState();
     print("inicio del Estado");
     _loadResult();
-    
+    _recipes = Recipes.create("","","");
   }
 
   Widget build(BuildContext context) {

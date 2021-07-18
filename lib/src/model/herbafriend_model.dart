@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:herbafriend/src/model/image_herba.dart';
+
 Recipes recipesFromJson(String str) => Recipes.fromJson(json.decode(str));
 
 String recipesToJson(Recipes data) => json.encode(data.toJson());
@@ -11,6 +13,7 @@ class Recipes {
     this.ingredients,
     this.preparation,
   });
+  Recipes.create(this.name, this.ingredients, this.preparation);
 
   String? id;
   String? name;
