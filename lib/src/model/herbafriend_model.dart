@@ -9,11 +9,11 @@ String recipesToJson(Recipes data) => json.encode(data.toJson());
 class Recipes {
   Recipes({
     this.id,
-    this.name,
-    this.ingredients,
-    this.preparation,
+    required this.name,
+    required this.ingredients,
+    required this.preparation,
   });
-  Recipes.create();
+  Recipes.create(this.name, this.ingredients, this.preparation);
 
   String? id;
   String? name;

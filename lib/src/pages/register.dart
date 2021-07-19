@@ -29,7 +29,7 @@ class _RegisterState extends State<Register> {
     super.initState();
     print("inicio del Estado");
     _loadResult();
-    _recipes = Recipes.create();
+    _recipes = Recipes.create("", "", "");
   }
 
   Widget build(BuildContext context) {
@@ -49,16 +49,16 @@ class _RegisterState extends State<Register> {
                 TextFormField(
                   initialValue: _recipes.name,
                   onSaved: (value) {
-                    _recipes.name = value;
+                    _recipes.name = value.toString();
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                    if (value!.length < 1) {
+                      return "Debe ingresar un mensaje con al menos 25 caracteres";
+                    } else {
+                      return null; //Validación se cumple al retorna null
                     }
-                    return null;
                   },
                   style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  controller: _controllerName,
                   decoration: InputDecoration(
                       icon: Icon(Icons.yard), labelText: 'Nombre'),
                 ),
@@ -68,14 +68,17 @@ class _RegisterState extends State<Register> {
                 Divider(),
                 TextFormField(
                   initialValue: _recipes.ingredients,
+                  onSaved: (value) {
+                    _recipes.ingredients = value.toString();
+                  },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                    if (value!.length < 1) {
+                      return "Debe ingresar un mensaje con al menos 25 caracteres";
+                    } else {
+                      return null; //Validación se cumple al retorna null
                     }
-                    return null;
                   },
                   style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  controller: _controllerIng,
                   decoration: InputDecoration(
                       icon: Icon(Icons.list), labelText: 'Ingrediente'),
                 ),
@@ -85,14 +88,17 @@ class _RegisterState extends State<Register> {
                 Divider(),
                 TextFormField(
                   initialValue: _recipes.preparation,
+                  onSaved: (value) {
+                    _recipes.preparation = value.toString();
+                  },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                    if (value!.length < 1) {
+                      return "Debe ingresar un mensaje con al menos 25 caracteres";
+                    } else {
+                      return null; //Validación se cumple al retorna null
                     }
-                    return null;
                   },
                   style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  controller: _controllerPrep,
                   decoration: InputDecoration(
                       icon: Icon(Icons.emoji_food_beverage),
                       labelText: 'Preparacion'),
@@ -130,19 +136,19 @@ class _RegisterState extends State<Register> {
                 ),
                 Divider(),
                 ElevatedButton(
-                    onPressed: () async {
-                      
+                    onPressed: () {
                       //Recipes data = await submit
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Processing Data')));
                       }
                       setState(() {
-                        _recipeService.sendRecipe(_recipes).then((value) => {
-                          _formKey.currentState!.reset(),
-                          Navigator.pop(context)
+                        _recipeService.sendRecipe(_recipes).then((value) {
+                          _formKey.currentState!.reset();
+                          Navigator.pop(context);
                         });
                       });
                     },
