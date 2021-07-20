@@ -111,7 +111,7 @@ class _RegisterState extends State<Register> {
                 //),
                 Container(
                   child: DropdownButton(
-                    value: _dropdownValue,
+                    value: _recipes.categories,
                     items: _result
                         .map((e) => DropdownMenuItem(
                               value: e.name.toString(),
@@ -120,8 +120,8 @@ class _RegisterState extends State<Register> {
                         .toList(),
                     onChanged: (value) {
                       setState(
-                        () {
-                          _dropdownValue = value.toString();
+                        () async {
+                          _recipes.categories = value!.toString();
                         },
                       );
                     },
