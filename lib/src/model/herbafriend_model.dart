@@ -12,19 +12,23 @@ class Recipes {
     required this.name,
     required this.ingredients,
     required this.preparation,
+    required this.categories,
   });
-  Recipes.create(this.name, this.ingredients, this.preparation);
+  Recipes.create(
+      this.name, this.ingredients, this.preparation, this.categories);
 
   String? id;
   String? name;
   String? ingredients;
   String? preparation;
+  String categories;
 
   factory Recipes.fromJson(Map<String, dynamic> json) => Recipes(
         id: json["id"],
         name: json["name"],
         ingredients: json["ingredients"],
         preparation: json["preparation"],
+        categories: json["categories"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,5 +36,6 @@ class Recipes {
         "name": name,
         "ingredients": ingredients,
         "preparation": preparation,
+        "categories": categories,
       };
 }

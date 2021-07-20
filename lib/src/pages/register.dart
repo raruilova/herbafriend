@@ -13,9 +13,6 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final CategoryService _service = CategoryService();
-  final TextEditingController _controllerName = TextEditingController();
-  final TextEditingController _controllerPrep = TextEditingController();
-  final TextEditingController _controllerIng = TextEditingController();
   final HerbaFriendService _recipeService = HerbaFriendService();
   //Future<Recipes>? _futureRecipe;
   late Recipes _recipes;
@@ -29,7 +26,7 @@ class _RegisterState extends State<Register> {
     super.initState();
     print("inicio del Estado");
     _loadResult();
-    _recipes = Recipes.create("", "", "");
+    _recipes = Recipes.create("", "", "", "");
   }
 
   Widget build(BuildContext context) {
