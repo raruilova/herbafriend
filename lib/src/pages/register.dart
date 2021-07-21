@@ -43,6 +43,7 @@ class _RegisterState extends State<Register> {
             child: Column(
               children: <Widget>[
                 TextFormField(
+                  
                   initialValue: _recipes.name,
                   onSaved: (value) {
                     _recipes.name = value.toString();
@@ -63,6 +64,7 @@ class _RegisterState extends State<Register> {
                 ),
                 Divider(),
                 TextFormField(
+                  maxLines: 3,
                   initialValue: _recipes.ingredients,
                   onSaved: (value) {
                     _recipes.ingredients = value.toString();
@@ -83,6 +85,7 @@ class _RegisterState extends State<Register> {
                 ),
                 Divider(),
                 TextFormField(
+                  maxLines: 3,
                   initialValue: _recipes.preparation,
                   onSaved: (value) {
                     _recipes.preparation = value.toString();
