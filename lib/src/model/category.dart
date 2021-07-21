@@ -11,20 +11,16 @@ String recipesToJson(CategoryRecipe data) => json.encode(data.toJson());
 
 class CategoryRecipe {
   CategoryRecipe({
-    this.id,
     required this.name,
   });
 
-  String? id;
   String name;
 
   factory CategoryRecipe.fromJson(Map<String, dynamic> json) => CategoryRecipe(
-        id: json["id"],
         name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
       };
 }

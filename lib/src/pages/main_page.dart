@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:herbafriend/src/model/categories.dart';
+import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/pages/register.dart';
 import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/utils/enums.dart';

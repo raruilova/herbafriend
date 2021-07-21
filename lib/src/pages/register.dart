@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:herbafriend/src/model/categories.dart';
+import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart';
@@ -18,7 +18,6 @@ class _RegisterState extends State<Register> {
   late Recipes _recipes;
   List<CategoryRecipe> _result = [];
 
-  var _dropdownValue;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -26,7 +25,7 @@ class _RegisterState extends State<Register> {
     super.initState();
     print("inicio del Estado");
     _loadResult();
-    _recipes = Recipes.create("", "", "", "");
+    _recipes = Recipes.create("", "", "", "Estomago");
   }
 
   Widget build(BuildContext context) {
@@ -110,24 +109,27 @@ class _RegisterState extends State<Register> {
                 //      icon: Icon(Icons.category), labelText: 'Categoria'),
                 //),
                 Container(
-                  child: DropdownButton(
-                    value: _recipes.categories,
-                    items: _result
-                        .map((e) => DropdownMenuItem(
-                              value: e.name.toString(),
-                              child: Text(e.name.toString()),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(
-                        () async {
-                          _recipes.categories = value!.toString();
-                        },
-                      );
-                    },
-                    hint: Text('Seleccione una categoria'),
-                  ),
-                ),
+                    child: Column(
+                  children: [
+                    DropdownButton<String>(
+                      value: _recipes.category,
+                      onChanged: (String? newvalue) {
+                        setState(
+                          () {
+                            _recipes.category = newvalue!;
+                          },
+                        );
+                      },
+                      items: _result.map<DropdownMenuItem<String>>(
+                          (CategoryRecipe value) {
+                        return DropdownMenuItem<String>(
+                          value: value.name,
+                          child: Text(value.name),
+                        );
+                      }).toList(),
+                    )
+                  ],
+                )),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
                 ),
@@ -136,12 +138,12 @@ class _RegisterState extends State<Register> {
                     onPressed: () {
                       //Recipes data = await submit
                       if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Processing Data')));
                       }
+                      _formKey.currentState!.save();
                       setState(() {
                         _recipeService.sendRecipe(_recipes).then((value) {
                           _formKey.currentState!.reset();
