@@ -34,9 +34,9 @@ class _HomeWidgetState extends State<HomeWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 0),
               child: SingleChildScrollView(
                   child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children:
-                          _result.map((e) => HerbaFriendCard(e)).toList())),
+                mainAxisSize: MainAxisSize.min,
+                children: _result.map((e) => HerbaFriendCard(e)).toList(),
+              )),
             ),
     );
   }

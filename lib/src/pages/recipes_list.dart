@@ -59,44 +59,50 @@ class _RecipeListState extends State<RecipeList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(widget.recipes.name.toString(),
+                    Text('Nombre: ' + widget.recipes.name.toString(),
                         style: TextStyle(
                             fontSize: 22.0, fontWeight: FontWeight.bold)),
                     SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(widget.recipes.category.toString(),
+                        Text('Categoria: ' + widget.recipes.category.toString(),
                             style:
                                 TextStyle(fontSize: 20.0, color: Colors.grey)),
                         Container(height: 25.0, color: Colors.grey, width: 1.0),
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    
                     Padding(
                       padding: EdgeInsets.only(bottom: 5.0),
                       child: Container(
                         height: 50.0,
                         child: Center(
-                          child: Text(widget.recipes.ingredients.toString(),
+                          child: Text(
+                              'Ingredientes: ' +
+                                  '\n\n' +
+                                  widget.recipes.ingredients.toString(),
                               style: TextStyle(
                                 color: Colors.black,
                               )),
                         ),
                       ),
                     ),
-                     SizedBox(height: 20.0),
-                    
+                    SizedBox(height: 20.0),
                     Padding(
                       padding: EdgeInsets.only(bottom: 5.0),
                       child: Container(
                         height: 50.0,
-                        child: Center(
-                          child: Text(widget.recipes.preparation.toString(),
-                              style: TextStyle(
-                                color: Colors.black,
-                              )),
+                        child: Row(
+                          children: [
+                            Text(
+                                'Preparacion: ' +
+                                    '\n\n' +
+                                    widget.recipes.preparation.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ))
+                          ],
                         ),
                       ),
                     )
