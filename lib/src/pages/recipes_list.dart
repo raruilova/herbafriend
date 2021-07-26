@@ -71,14 +71,16 @@ class _RecipeListState extends State<RecipeList> {
                       padding: EdgeInsets.only(bottom: 5.0),
                       child: Container(
                         height: 50.0,
-                        child: Center(
-                          child: Text(
+                        child: ListView(
+                          children: [
+                            Text(
                               'Ingredientes: ' +
                                   '\n\n' +
                                   widget.recipes.ingredients.toString(),
                               style: TextStyle(
                                 color: Colors.black,
                               )),
+                          ]
                         ),
                       ),
                     ),
