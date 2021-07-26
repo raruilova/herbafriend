@@ -27,13 +27,7 @@ class _RecipeListState extends State<RecipeList> {
           title: Text('Detalles',
               style: TextStyle(fontSize: 18.0, color: Colors.white)),
           centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.more_horiz),
-              onPressed: () {},
-              color: Colors.white,
-            )
-          ],
+          
         ),
         body: Column(children: [
           Stack(children: [
@@ -59,7 +53,7 @@ class _RecipeListState extends State<RecipeList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('Nombre: ' + widget.recipes.name.toString(),
+                    Text(widget.recipes.name.toString(),
                         style: TextStyle(
                             fontSize: 22.0, fontWeight: FontWeight.bold)),
                     SizedBox(height: 20.0),
@@ -88,12 +82,12 @@ class _RecipeListState extends State<RecipeList> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 30.0),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 5.0),
+                      padding: EdgeInsets.only(bottom: 10.0),
                       child: Container(
-                        height: 50.0,
-                        child: Row(
+                        height: 140.0,
+                        child: ListView(
                           children: [
                             Text(
                                 'Preparacion: ' +

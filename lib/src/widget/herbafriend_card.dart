@@ -25,7 +25,7 @@ class HerbaFriendCard extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             Container(
-              height: MediaQuery.of(context).size.height - 860.0,
+              height: MediaQuery.of(context).size.height - 550.0,
               decoration: BoxDecoration(
                 color: Colors.green,
                 borderRadius: BorderRadius.only(
