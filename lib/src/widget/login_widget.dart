@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
           height: _heigth * 0.4,
           width: _width,
           color: Colors.green,
-          child: Image.asset('images/logo.png'),
+          child: Image.asset('assets/images/logo.png'),
         ),
         Container(
             color: Colors.green,

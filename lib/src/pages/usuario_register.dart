@@ -21,7 +21,7 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
           height: _heigth * 0.3,
           width: _width,
           color: Colors.green,
-          child: Image.asset('images/logo.png'),
+          child: Image.asset('assets/images/logo.png'),
         ),
         Container(
             color: Colors.green,
