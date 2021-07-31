@@ -23,7 +23,7 @@ class _RecipeListState extends State<RecipeList> {
             color: Colors.white,
           ),
           backgroundColor: Colors.transparent,
-          elevation: 0.0,
+         
           title: Text('Detalles',
               style: TextStyle(fontSize: 18.0, color: Colors.white)),
           centerTitle: true,
@@ -32,7 +32,7 @@ class _RecipeListState extends State<RecipeList> {
         body: Column(children: [
           Stack(children: [
             Container(
-                height: MediaQuery.of(context).size.height - 82.0,
+                height: MediaQuery.of(context).size.height - 120.0,
                 width: MediaQuery.of(context).size.width,
                 color: Colors.transparent),
             Positioned(
@@ -66,11 +66,11 @@ class _RecipeListState extends State<RecipeList> {
                         Container(height: 25.0, color: Colors.grey, width: 1.0),
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 15.0),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 5.0),
+                      padding: EdgeInsets.only(bottom: 1.0),
                       child: Container(
-                        height: 50.0,
+                        height: 120.0,
                         child: ListView(
                           children: [
                             Text(
@@ -84,11 +84,11 @@ class _RecipeListState extends State<RecipeList> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30.0),
+                    //SizedBox(height: 10.0),
                     Padding(
                       padding: EdgeInsets.only(bottom: 10.0),
                       child: Container(
-                        height: 140.0,
+                        height: 180.0,
                         child: ListView(
                           children: [
                             Text(
