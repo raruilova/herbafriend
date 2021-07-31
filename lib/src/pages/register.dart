@@ -3,6 +3,7 @@ import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart';
+import 'package:herbafriend/src/utils/standart.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -30,135 +31,194 @@ class _RegisterState extends State<Register> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Recetas'),
-        backgroundColor: Colors.green,
-      ),
-      body: Form(
-        key: _formKey,
-        //height: 570.0,
-        //padding: const EdgeInsets.all(20.0),
-        child: Card(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  
-                  initialValue: _recipes.name,
-                  onSaved: (value) {
-                    _recipes.name = value.toString();
-                  },
-                  validator: (value) {
-                    if (value!.length < 1) {
-                      return "Debe ingresar un mensaje con al menos 25 caracteres";
-                    } else {
-                      return null; //Validación se cumple al retorna null
-                    }
-                  },
-                  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.yard), labelText: 'Nombre'),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                ),
-                Divider(),
-                TextFormField(
-                  maxLines: 3,
-                  initialValue: _recipes.ingredients,
-                  onSaved: (value) {
-                    _recipes.ingredients = value.toString();
-                  },
-                  validator: (value) {
-                    if (value!.length < 1) {
-                      return "Debe ingresar un mensaje con al menos 25 caracteres";
-                    } else {
-                      return null; //Validación se cumple al retorna null
-                    }
-                  },
-                  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.list), labelText: 'Ingrediente'),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                ),
-                Divider(),
-                TextFormField(
-                  maxLines: 3,
-                  initialValue: _recipes.preparation,
-                  onSaved: (value) {
-                    _recipes.preparation = value.toString();
-                  },
-                  validator: (value) {
-                    if (value!.length < 1) {
-                      return "Debe ingresar un mensaje con al menos 25 caracteres";
-                    } else {
-                      return null; //Validación se cumple al retorna null
-                    }
-                  },
-                  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.emoji_food_beverage),
-                      labelText: 'Preparacion'),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                ),
-                Divider(),
-                //TextField(
-                //  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                //  decoration: InputDecoration(
-                //      icon: Icon(Icons.category), labelText: 'Categoria'),
-                //),
-                Container(
-                    child: Column(
+        appBar: AppBar(
+          title: Text('Recetas'),
+          backgroundColor: Colors.green,
+        ),
+        body: SingleChildScrollView(
+          child: Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              Standard.getBackground(context),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 25.0),
+                child: Column(
                   children: [
-                    DropdownButton<String>(
-                      value: _recipes.category,
-                      onChanged: (String? newvalue) {
-                        setState(
-                          () {
-                            _recipes.category = newvalue!;
-                          },
-                        );
-                      },
-                      items: _result.map<DropdownMenuItem<String>>(
-                          (CategoryRecipe value) {
-                        return DropdownMenuItem<String>(
-                          value: value.name,
-                          child: Text(value.name),
-                        );
-                      }).toList(),
-                    )
+                    Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: [
+                        _imageDefault(),
+                        Container(
+                          width: 325.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Tooltip(
+                                message: "Tomar Foto",
+                                child: ElevatedButton(
+                                  onPressed: null,
+                                  child: Icon(Icons.camera_alt),
+                                  style: Standard.buttonStandardStyle(context),
+                                ),
+                              ),
+                              Tooltip(
+                                message: "Buscar Foto",
+                                child: ElevatedButton(
+                                  onPressed: null,
+                                  child: Icon(Icons.image),
+                                  style: Standard.buttonStandardStyle(context),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Standard.titleToForm(context, "Registro de Recetas"),
+                    _form()
                   ],
-                )),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0),
                 ),
-                Divider(),
-                ElevatedButton(
-                    onPressed: () {
-                      //Recipes data = await submit
-                      if (_formKey.currentState!.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Processing Data')));
-                      }
-                      _formKey.currentState!.save();
-                      setState(() {
-                        _recipeService.sendRecipe(_recipes).then((value) {
-                          _formKey.currentState!.reset();
-                          Navigator.pop(context);
-                        });
-                      });
+              ),
+            ],
+          ),
+        ));
+  }
+
+  _form() {
+    return SingleChildScrollView(
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: Theme.of(context).dividerColor)),
+        child: Form(
+          key: _formKey,
+          //height: 570.0,
+          //padding: const EdgeInsets.all(20.0),
+          child: Card(
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    initialValue: _recipes.name,
+                    onSaved: (value) {
+                      _recipes.name = value.toString();
                     },
-                    child: Text(
-                      'Agregar',
-                      style: TextStyle(fontSize: 20),
-                    ))
-              ],
+                    validator: (value) {
+                      if (value!.length < 1) {
+                        return "Debe ingresar un mensaje con al menos 25 caracteres";
+                      } else {
+                        return null; //Validación se cumple al retorna null
+                      }
+                    },
+                    style:
+                        TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.yard), labelText: 'Nombre'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                  ),
+                  Divider(),
+                  TextFormField(
+                    maxLines: 4,
+                    initialValue: _recipes.ingredients,
+                    onSaved: (value) {
+                      _recipes.ingredients = value.toString();
+                    },
+                    validator: (value) {
+                      if (value!.length < 1) {
+                        return "Debe ingresar un mensaje con al menos 25 caracteres";
+                      } else {
+                        return null; //Validación se cumple al retorna null
+                      }
+                    },
+                    style:
+                        TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.list), labelText: 'Ingrediente'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                  ),
+                  Divider(),
+                  TextFormField(
+                    maxLines: 4,
+                    initialValue: _recipes.preparation,
+                    onSaved: (value) {
+                      _recipes.preparation = value.toString();
+                    },
+                    validator: (value) {
+                      if (value!.length < 1) {
+                        return "Debe ingresar un mensaje con al menos 25 caracteres";
+                      } else {
+                        return null; //Validación se cumple al retorna null
+                      }
+                    },
+                    style:
+                        TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.emoji_food_beverage),
+                        labelText: 'Preparacion'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                  ),
+                  Divider(),
+                  //TextField(
+                  //  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                  //  decoration: InputDecoration(
+                  //      icon: Icon(Icons.category), labelText: 'Categoria'),
+                  //),
+                  Container(
+                      child: Column(
+                    children: [
+                      DropdownButton<String>(
+                        value: _recipes.category,
+                        onChanged: (String? newvalue) {
+                          setState(
+                            () {
+                              _recipes.category = newvalue!;
+                            },
+                          );
+                        },
+                        items: _result.map<DropdownMenuItem<String>>(
+                            (CategoryRecipe value) {
+                          return DropdownMenuItem<String>(
+                            value: value.name,
+                            child: Text(value.name),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  )),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                  ),
+                  Divider(),
+                  ElevatedButton(
+                      onPressed: () {
+                        //Recipes data = await submit
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Processing Data')));
+                        }
+                        _formKey.currentState!.save();
+                        setState(() {
+                          _recipeService.sendRecipe(_recipes).then((value) {
+                            _formKey.currentState!.reset();
+                            Navigator.pop(context);
+                          });
+                        });
+                      },
+                      child: Text(
+                        'Agregar',
+                        style: TextStyle(fontSize: 20),
+                      ))
+                ],
+              ),
             ),
           ),
         ),
@@ -166,11 +226,27 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  /*
+  
+   */
   _loadResult() {
     _service.getCategory().then((value) {
       print(value.toString());
       _result = value;
       setState(() {});
     });
+  }
+
+  _imageDefault() {
+    return Container(
+      width: 100.0,
+      height: 100.0,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          color: Theme.of(context).canvasColor),
+      child: ClipOval(
+        child: Image.asset("assets/images/planta.png"),
+      ),
+    );
   }
 }
