@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart';
 import 'package:herbafriend/src/utils/standart.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -20,6 +23,9 @@ class _RegisterState extends State<Register> {
   List<CategoryRecipe> _result = [];
 
   final _formKey = GlobalKey<FormState>();
+  late File _image;
+  bool _imageSelected = false;
+  final _picker = ImagePicker();
 
   @override
   void initState() {
@@ -56,7 +62,7 @@ class _RegisterState extends State<Register> {
                               Tooltip(
                                 message: "Tomar Foto",
                                 child: ElevatedButton(
-                                  onPressed: null,
+                                  onPressed: _takeImage,
                                   child: Icon(Icons.camera_alt),
                                   style: Standard.buttonStandardStyle(context),
                                 ),
@@ -64,7 +70,7 @@ class _RegisterState extends State<Register> {
                               Tooltip(
                                 message: "Buscar Foto",
                                 child: ElevatedButton(
-                                  onPressed: null,
+                                  onPressed: _pickImage,
                                   child: Icon(Icons.image),
                                   style: Standard.buttonStandardStyle(context),
                                 ),
@@ -197,7 +203,7 @@ class _RegisterState extends State<Register> {
                   ),
                   Divider(),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         //Recipes data = await submit
                         if (_formKey.currentState!.validate()) {
                           // If the form is valid, display a snackbar. In the real world,
@@ -206,6 +212,12 @@ class _RegisterState extends State<Register> {
                               SnackBar(content: Text('Processing Data')));
                         }
                         _formKey.currentState!.save();
+
+                        if (_imageSelected) {
+                          _recipes.imagen =
+                              await _recipeService.upImage(_image);
+                        }
+
                         setState(() {
                           _recipeService.sendRecipe(_recipes).then((value) {
                             _formKey.currentState!.reset();
@@ -245,8 +257,29 @@ class _RegisterState extends State<Register> {
           borderRadius: BorderRadius.circular(100.0),
           color: Theme.of(context).canvasColor),
       child: ClipOval(
-        child: Image.asset("assets/images/planta.png"),
-      ),
+          child: _imageSelected == false
+              ? Image.asset("assets/images/planta.png")
+              : Image.file(_image)),
     );
+  }
+
+  _takeImage() {
+    _selectImage(ImageSource.camera);
+  }
+
+  _pickImage() {
+    _selectImage(ImageSource.gallery);
+  }
+
+  Future _selectImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      _imageSelected = true;
+    } else {
+      print('No image selected.');
+      _imageSelected = false;
+    }
+    setState(() {});
   }
 }
