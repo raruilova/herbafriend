@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
+import 'package:herbafriend/src/utils/standart.dart';
 
 class RecipeList extends StatefulWidget {
   final Recipes recipes;
@@ -13,99 +14,113 @@ class _RecipeListState extends State<RecipeList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green,
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios),
-            color: Colors.white,
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          title: Text('Detalles',
-              style: TextStyle(fontSize: 18.0, color: Colors.white)),
-          centerTitle: true,
-          
+          title: Text('Detalles'),
+          backgroundColor: Colors.green,
         ),
-        body: Column(children: [
-          Stack(children: [
-            Container(
-                height: MediaQuery.of(context).size.height - 82.0,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.transparent),
-            Positioned(
-                top: 75.0,
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(45.0),
-                          topRight: Radius.circular(45.0),
-                        ),
-                        color: Colors.white),
-                    height: MediaQuery.of(context).size.height - 100.0,
-                    width: MediaQuery.of(context).size.width)),
-            Positioned(
-                top: 250.0,
-                left: 25.0,
-                right: 25.0,
+        body: SingleChildScrollView(
+          child: Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              Standard.getBackground(context),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 25.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(widget.recipes.name.toString(),
-                        style: TextStyle(
-                            fontSize: 22.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Categoria: ' + widget.recipes.category.toString(),
-                            style:
-                                TextStyle(fontSize: 20.0, color: Colors.grey)),
-                        Container(height: 25.0, color: Colors.grey, width: 1.0),
+                  children: [
+                    Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: [
+                        Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Theme.of(context).canvasColor),
+                          child: ClipOval(
+                              child: widget.recipes.imagen == null
+                                  ? Image.asset("assets/images/user.png")
+                                  : Image.network(
+                                      widget.recipes.imagen.toString())),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 20.0),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5.0),
-                      child: Container(
-                        height: 50.0,
-                        child: ListView(
-                          children: [
-                            Text(
-                              'Ingredientes: ' +
+                    Standard.titleToForm(context, "Detalle de Recetas"),
+                    _detalles()
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  _detalles() {
+    return SingleChildScrollView(
+      child: Container(
+          decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(color: Theme.of(context).dividerColor)),
+          child: Card(
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    widget.recipes.name.toString(),
+                    style:
+                        TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Categoria: ' + widget.recipes.category.toString(),
+                          style: TextStyle(fontSize: 20.0, color: Colors.grey)),
+                      Container(height: 25.0, color: Colors.grey),
+                    ],
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5.0),
+                    child: Container(
+                      height: 125.0,
+                      child: ListView(children: [
+                        Text(
+                            'Ingredientes: ' +
+                                '\n\n' +
+                                widget.recipes.ingredients.toString(),
+                            style: TextStyle(
+                              color: Colors.black,
+                            )),
+                      ]),
+                    ),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10.0),
+                    child: Container(
+                      height: 140.0,
+                      child: ListView(
+                        children: [
+                          Text(
+                              'Preparacion: ' +
                                   '\n\n' +
-                                  widget.recipes.ingredients.toString(),
+                                  widget.recipes.preparation.toString(),
                               style: TextStyle(
                                 color: Colors.black,
-                              )),
-                          ]
-                        ),
+                              ))
+                        ],
                       ),
                     ),
-                    SizedBox(height: 30.0),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10.0),
-                      child: Container(
-                        height: 140.0,
-                        child: ListView(
-                          children: [
-                            Text(
-                                'Preparacion: ' +
-                                    '\n\n' +
-                                    widget.recipes.preparation.toString(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ))
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ))
-          ])
-        ]));
+                  )
+                ],
+              ),
+            ),
+          )),
+    );
   }
 }
 

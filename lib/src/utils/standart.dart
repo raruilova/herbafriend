@@ -26,13 +26,10 @@ class Standard {
           height: size.height * 0.4,
           width: double.infinity,
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: ExactAssetImage("assets/images/background.png"),
-                  repeat: ImageRepeat.repeat),
               gradient: LinearGradient(colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColorDark,
-              ])),
+            Theme.of(context).primaryColor,
+            Theme.of(context).primaryColorDark,
+          ])),
         ),
         Positioned(top: 90.0, left: 30.0, child: circle),
         Positioned(top: -40.0, left: -30.0, child: circle),
