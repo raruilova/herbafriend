@@ -30,7 +30,8 @@ class PersonalList {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "description": description,
         "active": active,
-        "description": description
+        
       };
 }

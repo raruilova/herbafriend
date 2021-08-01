@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:herbafriend/src/model/personal_list.dart';
+import 'package:herbafriend/src/providers/personalList_provider.dart';
+import 'package:provider/provider.dart';
 
 class RegisterList extends StatefulWidget {
   RegisterList({Key? key}) : super(key: key);
@@ -10,10 +13,21 @@ class RegisterList extends StatefulWidget {
 enum SingingCharacter { revision, recordatorio }
 
 class _RegisterListState extends State<RegisterList> {
+  bool _onSaving = false;
   final _nameController = TextEditingController();
   final _recordatorioController = TextEditingController();
   SingingCharacter? _character = SingingCharacter.revision;
+  final formKey = GlobalKey<FormState>();
+  late PersonalList _listelement;
+  List<String> _typesElement = ['Revision', 'Recordatorio'];
+  String _typeValue = "";
   @override
+  void initState() {
+    super.initState();
+    _typeValue = _typesElement.elementAt(0);
+    _listelement = PersonalList.create("", "", _typeValue == "Revision");
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +69,12 @@ class _RegisterListState extends State<RegisterList> {
                 child: Column(
               children: [
                 TextFormField(
-                  controller: _nameController,
+                  initialValue: _listelement.name,
+                  //controller: _nameController,
+                  onSaved: (value) {
+                    _listelement.name = value.toString();
+                  },
+                
                   decoration:
                       InputDecoration(filled: true, labelText: 'Nombre'),
                 ),
@@ -64,46 +83,62 @@ class _RegisterListState extends State<RegisterList> {
                 ),
                 TextFormField(
                   maxLines: 2,
-                  controller: _recordatorioController,
+                  initialValue: _listelement.description,
+                  onSaved: (value) {
+                    _listelement.description = value.toString();
+                  },
+                  //controller: _recordatorioController,
+                 
                   decoration:
                       InputDecoration(filled: true, labelText: 'Descripcion'),
                   //obscureText: true,
                 ),
                 Column(
-                  children: [
-                    ListTile(
-                      title: Text('Revision'),
-                      leading: Radio<SingingCharacter>(
-                        value: SingingCharacter.revision,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Recordatorio'),
-                      leading: Radio<SingingCharacter>(
-                        value: SingingCharacter.recordatorio,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
-                        },
-                      ),
-                    )
-                  ],
+                  children:
+                   _typesElement.map((e) => ListTile(
+                     title: Text(e),
+                     leading: Radio(
+                       value: e,
+                       groupValue: _typeValue,
+                       onChanged: (String ? value) {
+                         _typeValue = value.toString();
+                         _listelement.active = _typeValue == "Revision";
+                         setState(() {
+                           
+                         });
+                       },
+                     ),
+                   )).toList()
                 ),
-              ],
-            )),
-            ButtonBar(
-              children: [
-                OutlineButton(onPressed: () {}, child: Text('Guardar'))
+                ElevatedButton(
+                  
+                    
+                        onPressed: () {
+                          if (!formKey.currentState!.validate()) return;
+                          _onSaving = true;
+                          setState(() {});
+
+                          formKey.currentState!.save();
+                          final personalListProvider =
+                              Provider.of<PersonalListProvider>(context,
+                                  listen: false);
+                          personalListProvider
+                              .addElement(
+                                  _listelement.name, _listelement.description, _listelement.active)
+                              .then((value)  {
+                                    _listelement = value;
+                                    formKey.currentState!.reset();
+                                    _onSaving = false;
+                                    setState(() {
+                                    });
+                                  });
+                        },
+                        child: Text('Guardar')
+                  
+                )
               ],
             )
+            ),
           ],
         ),
       ),

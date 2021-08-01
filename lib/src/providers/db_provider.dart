@@ -18,11 +18,11 @@ class DBProvider {
   }
   Future<Database> initDb() async {
     Directory appDir = await getApplicationDocumentsDirectory();
-    final path = join(appDir.path, 'Recepies.db');
+    final path = join(appDir.path, 'herbaFriend.db');
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('''
-        CREATE TABLE Recepies.db(
+        CREATE TABLE personalList(
           id  INTEGER PRIMARY KEY,
           name TEXT,          
           description TEXT,
@@ -34,13 +34,13 @@ class DBProvider {
 
   Future<int> insert(PersonalList newElement) async {
     final db = await database;
-    final newId = await db.insert('PersonalLists', newElement.toJson());
+    final newId = await db.insert('personalList', newElement.toJson());
     return newId;
   }
 
    Future<dynamic> list() async {
     final db = await database;
-    final result = await db.query('PersonalLists');
+    final result = await db.query('personalList');
     return result.isNotEmpty
         ? result.map((t) => PersonalList.fromJson(t)).toList()
         : [];

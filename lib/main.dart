@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:herbafriend/src/providers/personalList_provider.dart';
 import 'package:herbafriend/src/widget/login_widget.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  //colocar en laa raiz de la app, para tener acceso a los datos en toda la app
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<PersonalListProvider>(create: (_) => PersonalListProvider())
+  ],
+  child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
