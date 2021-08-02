@@ -3,9 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/pages/register.dart';
+import 'package:herbafriend/src/providers/app_provider.dart';
 import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/utils/enums.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:herbafriend/src/widget/login_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key, required this.titulo}) : super(key: key);
@@ -17,6 +20,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  bool? darkModePrefs = null;
 
   final CategoryService _service = CategoryService();
 
@@ -27,10 +31,12 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     print("inicio del Estado");
     _loadResult();
+    _loadDarkModePrefs();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -65,6 +71,34 @@ class _MainPageState extends State<MainPage> {
           ),
           Divider(
             color: Colors.white,
+          ),
+          Column(
+            children: [
+              darkModePrefs == null
+                  ? Container()
+                  : Card(
+                      elevation: 5.0,
+                      child: ListTile(
+                        title: Text("Modo obscuro",
+                            style: Theme.of(context).textTheme.bodyText1),
+                        subtitle: Text(
+                            "El modo obscuro tiene un fondo opaco con un constrate de letras claro.",
+                            style: Theme.of(context).textTheme.caption),
+                        leading: Checkbox(
+                            value: darkModePrefs,
+                            onChanged: (value) {
+                              appProvider.darkMode = value ?? false;
+                              setDarkMode(value ?? false);
+                              if (value == true) {
+                                print("Modo nocturno activado");
+                              } else {
+                                print("Modo nocturno desactivado");
+                              }
+                              Navigator.pop(context);
+                            }),
+                      ),
+                    )
+            ],
           ),
           TextButton(
               onPressed: () {
@@ -116,5 +150,10 @@ class _MainPageState extends State<MainPage> {
       _result = value;
       setState(() {});
     });
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {});
   }
 }

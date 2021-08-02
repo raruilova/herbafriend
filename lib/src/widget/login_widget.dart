@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/pages/main_page.dart';
 import 'package:herbafriend/src/pages/usuario_register.dart';
+import 'package:herbafriend/src/providers/app_provider.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     double _heigth = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
