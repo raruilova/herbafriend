@@ -62,6 +62,7 @@ class _RegisterListState extends State<RegisterList> {
             ),
             SizedBox(height: 40.0),
             Form(
+              key: formKey,
                 child: Column(
               children: [
                 TextFormField(
@@ -105,9 +106,10 @@ class _RegisterListState extends State<RegisterList> {
                 //),
                 ElevatedButton(
                         onPressed: () {
-                          if (formKey.currentState!.validate()) return;
+                          if (!formKey.currentState!.validate()) return;
                           
                           setState(() {});
+
 
                           formKey.currentState!.save();
                           final personalListProvider =
@@ -122,6 +124,7 @@ class _RegisterListState extends State<RegisterList> {
                                    
                                     setState(() {
                                     });
+                                    Navigator.pop(context);
                                   });
                         },
                         child: Text('Guardar')

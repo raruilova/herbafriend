@@ -16,7 +16,7 @@ class _YourListWidgetState extends State<YourListWidget> {
   @override
   Widget build(BuildContext context) {
     final personalListProvider =
-        Provider.of<PersonalListProvider>(context, listen: false);
+        Provider.of<PersonalListProvider>(context, listen: true);
     personalListProvider.loadElements();
     return Scaffold(
             backgroundColor: Colors.green,
@@ -70,7 +70,7 @@ class _YourListWidgetState extends State<YourListWidget> {
                                   child: Column(
                                     children: [
                                       ListTile(
-                                        title: Text(personalListProvider.elements[index].name, style: TextStyle(color: Colors.black),),
+                                        title: Text(personalListProvider.elements[index].name),
                                         //subtitle: Text(personalListProvider.elements[index].active.toString()),
                                         leading: Icon(Icons.grass),
                                       )
