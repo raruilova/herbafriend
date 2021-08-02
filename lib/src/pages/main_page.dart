@@ -20,7 +20,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  bool? darkModePrefs = null;
+  bool? darkModePrefs;
 
   final CategoryService _service = CategoryService();
 
@@ -49,14 +49,15 @@ class _MainPageState extends State<MainPage> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.green),
+            decoration:
+                BoxDecoration(color: Theme.of(context).primaryColorDark),
             child: SingleChildScrollView(
               child: Text(
                 "Bienvenid@",
                 style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                    color: Theme.of(context).primaryColorLight),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -79,26 +80,32 @@ class _MainPageState extends State<MainPage> {
                   : Card(
                       elevation: 5.0,
                       child: ListTile(
-                        title: Text("Modo obscuro",
+                        title: Text("Modo oscuro",
                             style: Theme.of(context).textTheme.bodyText1),
-                        subtitle: Text(
-                            "El modo obscuro tiene un fondo opaco con un constrate de letras claro.",
-                            style: Theme.of(context).textTheme.caption),
                         leading: Checkbox(
                             value: darkModePrefs,
                             onChanged: (value) {
-                              appProvider.darkMode = value ?? false;
-                              setDarkMode(value ?? false);
-                              if (value == true) {
-                                print("Modo nocturno activado");
-                              } else {
-                                print("Modo nocturno desactivado");
-                              }
-                              Navigator.pop(context);
+                              setState(() {
+                                appProvider.darkMode = value ?? false;
+                                setDarkMode(value ?? false);
+                                if (value == true) {
+                                  print("Modo nocturno activado");
+                                } else {
+                                  print("Modo nocturno desactivado");
+                                }
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MainPage(titulo: "Recetas")));
+                              });
                             }),
                       ),
                     )
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 8.0),
           ),
           TextButton(
               onPressed: () {
@@ -110,7 +117,7 @@ class _MainPageState extends State<MainPage> {
               },
               child: Text(
                 'Salir',
-                style: TextStyle(fontSize: 20),
+                style: Theme.of(context).textTheme.headline6,
               ))
         ],
       )),

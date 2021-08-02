@@ -39,7 +39,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Recetas'),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
           child: Stack(
