@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/pages/main_page.dart';
 import 'package:herbafriend/src/pages/usuario_register.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -10,6 +11,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool? darkModePrefs;
+  @override
+  void initState() {
+    super.initState();
+    _loadDarkModePrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     double _heigth = MediaQuery.of(context).size.height;
@@ -19,16 +27,19 @@ class _LoginState extends State<Login> {
       child: Column(
         children: <Widget>[
           Container(
-            height: _heigth * 0.4,
-            width: _width,
-            color: Colors.green,
-            child: Image.asset('assets/images/logo.png'),
-          ),
+              height: _heigth * 0.4,
+              width: _width,
+              color: darkModePrefs == false ? Colors.green : Colors.black,
+              child: darkModePrefs == false
+                  ? Image.asset('assets/images/logo.png')
+                  : Image.asset('assets/images/logodark.png')),
           Container(
-              color: Colors.green,
+              color: darkModePrefs == false ? Colors.green : Colors.black,
               child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: darkModePrefs == false
+                          ? Colors.white
+                          : Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
@@ -41,8 +52,11 @@ class _LoginState extends State<Login> {
                             color: Colors.black,
                             child: Text(
                               'Ingresar',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: darkModePrefs == false
+                                      ? Colors.black
+                                      : Colors.grey[400]),
                             ),
                           ),
                         ),
@@ -57,10 +71,14 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(top: 12.0),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         TextField(
                           style: TextStyle(
@@ -73,19 +91,28 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(top: 12.0),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         MaterialButton(
                           minWidth: 200.0,
                           height: 50.0,
-                          color: Colors.green,
+                          color: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent,
                           child: Text(
                             'Iniciar Sesión',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
+                            style: TextStyle(
+                                color: darkModePrefs == false
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 20.0),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -100,19 +127,28 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         MaterialButton(
                           minWidth: 200.0,
                           height: 50.0,
-                          color: Colors.green,
+                          color: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent,
                           child: Text(
                             'Registrarse',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
+                            style: TextStyle(
+                                color: darkModePrefs == false
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 20.0),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -126,10 +162,14 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                       ],
                     ),
@@ -137,5 +177,10 @@ class _LoginState extends State<Login> {
         ],
       ),
     ));
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {});
   }
 }

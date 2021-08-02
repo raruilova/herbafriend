@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:herbafriend/src/widget/login_widget.dart';
 
 import 'main_page.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 
 class UsuarioRegister extends StatefulWidget {
   UsuarioRegister({Key? key}) : super(key: key);
@@ -10,6 +12,13 @@ class UsuarioRegister extends StatefulWidget {
 }
 
 class _UsuarioRegisterState extends State<UsuarioRegister> {
+  bool? darkModePrefs;
+  @override
+  void initState() {
+    super.initState();
+    _loadDarkModePrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     double _heigth = MediaQuery.of(context).size.height;
@@ -21,14 +30,18 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
           Container(
             height: _heigth * 0.3,
             width: _width,
-            color: Colors.green,
-            child: Image.asset('assets/images/logo.png'),
+            color: darkModePrefs == false ? Colors.green : Colors.black,
+            child: darkModePrefs == false
+                ? Image.asset('assets/images/logo.png')
+                : Image.asset('assets/images/logodark.png'),
           ),
           Container(
-              color: Colors.green,
+              color: darkModePrefs == false ? Colors.green : Colors.black,
               child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: darkModePrefs == false
+                          ? Colors.white
+                          : Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
@@ -41,7 +54,11 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
                             color: Colors.black,
                             child: Text(
                               'Registrar Usuario',
-                              style: TextStyle(fontSize: 25),
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: darkModePrefs == false
+                                      ? Colors.black
+                                      : Colors.grey[400]),
                             ),
                           ),
                         ),
@@ -55,10 +72,14 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
                           padding: EdgeInsets.only(top: 12.0),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         TextField(
                           style: TextStyle(
@@ -71,10 +92,14 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
                           padding: EdgeInsets.only(top: 12.0),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         TextField(
                           style: TextStyle(
@@ -87,25 +112,38 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
                           padding: EdgeInsets.only(top: 12.0),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         MaterialButton(
                           minWidth: 200.0,
                           height: 50.0,
-                          color: Colors.green,
+                          color: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent,
                           child: Text(
                             'Crear Cuenta',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
+                            style: TextStyle(
+                                color: darkModePrefs == false
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 20.0),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -120,10 +158,49 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
                           ),
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                         Divider(
-                          color: Colors.white,
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
+                        ),
+                        MaterialButton(
+                          minWidth: 200.0,
+                          height: 50.0,
+                          color: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent,
+                          child: Text(
+                            'Regresar',
+                            style: TextStyle(
+                                color: darkModePrefs == false
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 20.0),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Login(),
+                                ));
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        Divider(
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
+                        ),
+                        Divider(
+                          color: darkModePrefs == false
+                              ? Colors.white
+                              : Colors.grey[850],
                         ),
                       ],
                     ),
@@ -131,5 +208,10 @@ class _UsuarioRegisterState extends State<UsuarioRegister> {
         ],
       ),
     ));
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {});
   }
 }

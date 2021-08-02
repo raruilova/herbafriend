@@ -46,7 +46,7 @@ class Standard {
   }
 
   static Widget titleToForm(BuildContext context, String title) {
-    Color _color = Theme.of(context).cardColor;
+    Color _color = Colors.white;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 14.0),
       child: Text(title,
@@ -54,9 +54,10 @@ class Standard {
     );
   }
 
-  static ButtonStyle buttonStandardStyle(BuildContext context) {
+  static ButtonStyle buttonStandardStyle(BuildContext context, Color color) {
     return ElevatedButton.styleFrom(
         elevation: 5.0,
+        primary: color,
         shadowColor: Theme.of(context).dividerColor,
         shape: CircleBorder(),
         padding: EdgeInsets.all(20));
