@@ -25,8 +25,7 @@ class DBProvider {
         CREATE TABLE personalList(
           id  INTEGER PRIMARY KEY,
           name TEXT,          
-          description TEXT,
-          active BOOLEAN
+          description TEXT
         )      
       ''');
     });

@@ -15,8 +15,6 @@ class _YourListWidgetState extends State<YourListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double _heigth = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
     final personalListProvider =
         Provider.of<PersonalListProvider>(context, listen: false);
     personalListProvider.loadElements();
@@ -54,7 +52,7 @@ class _YourListWidgetState extends State<YourListWidget> {
                   child: ListView.builder(
                     primary: false,
                     padding: EdgeInsets.only(left: 25.0, right: 20.0),
-                    shrinkWrap: true,
+                    
                     itemCount: personalListProvider.elements.length,
                     itemBuilder: (_, index) => 
                     
@@ -62,9 +60,8 @@ class _YourListWidgetState extends State<YourListWidget> {
                       Padding(
                           padding: EdgeInsets.only(top: 45.0),
                           child: Container(
-                              height:
-                                  MediaQuery.of(context).size.height - 300.0,
-                              child: ListView(children: [
+                              
+                              child:
                                 Card(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
@@ -80,7 +77,9 @@ class _YourListWidgetState extends State<YourListWidget> {
                                     ],
                                   ),
                                 )
-                              ]))),
+                              
+                              )
+                              ),
                     
                   ),
                 ),

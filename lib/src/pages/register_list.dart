@@ -10,13 +10,9 @@ class RegisterList extends StatefulWidget {
   _RegisterListState createState() => _RegisterListState();
 }
 
-enum SingingCharacter { revision, recordatorio }
 
 class _RegisterListState extends State<RegisterList> {
-  bool _onSaving = false;
-  final _nameController = TextEditingController();
-  final _recordatorioController = TextEditingController();
-  SingingCharacter? _character = SingingCharacter.revision;
+  
   final formKey = GlobalKey<FormState>();
   late PersonalList _listelement;
   List<String> _typesElement = ['Revision', 'Recordatorio'];
@@ -25,7 +21,7 @@ class _RegisterListState extends State<RegisterList> {
   void initState() {
     super.initState();
     _typeValue = _typesElement.elementAt(0);
-    _listelement = PersonalList.create("", "", _typeValue == "Revision");
+    _listelement = PersonalList.create("", "");
   }
 
   Widget build(BuildContext context) {
@@ -70,7 +66,6 @@ class _RegisterListState extends State<RegisterList> {
               children: [
                 TextFormField(
                   initialValue: _listelement.name,
-                  //controller: _nameController,
                   onSaved: (value) {
                     _listelement.name = value.toString();
                   },
@@ -87,35 +82,31 @@ class _RegisterListState extends State<RegisterList> {
                   onSaved: (value) {
                     _listelement.description = value.toString();
                   },
-                  //controller: _recordatorioController,
-                 
                   decoration:
                       InputDecoration(filled: true, labelText: 'Descripcion'),
                   //obscureText: true,
                 ),
-                Column(
-                  children:
-                   _typesElement.map((e) => ListTile(
-                     title: Text(e),
-                     leading: Radio(
-                       value: e,
-                       groupValue: _typeValue,
-                       onChanged: (String ? value) {
-                         _typeValue = value.toString();
-                         _listelement.active = _typeValue == "Revision";
-                         setState(() {
-                           
-                         });
-                       },
-                     ),
-                   )).toList()
-                ),
+                //Column(
+                //  children:
+                //   _typesElement.map((e) => ListTile(
+                //     title: Text(e),
+                //     leading: Radio(
+                //       value: e,
+                //       groupValue: _typeValue,
+                //       onChanged: (String? value) {
+                //         _typeValue = value.toString();
+                //         _listelement.active = _typeValue == "Revision";
+                //         setState(() {
+                //           
+                //         });
+                //       },
+                //     ),
+                //   )).toList()
+                //),
                 ElevatedButton(
-                  
-                    
                         onPressed: () {
-                          if (!formKey.currentState!.validate()) return;
-                          _onSaving = true;
+                          if (formKey.currentState!.validate()) return;
+                          
                           setState(() {});
 
                           formKey.currentState!.save();
@@ -124,11 +115,11 @@ class _RegisterListState extends State<RegisterList> {
                                   listen: false);
                           personalListProvider
                               .addElement(
-                                  _listelement.name, _listelement.description, _listelement.active)
+                                  _listelement.name, _listelement.description)
                               .then((value)  {
                                     _listelement = value;
                                     formKey.currentState!.reset();
-                                    _onSaving = false;
+                                   
                                     setState(() {
                                     });
                                   });
