@@ -86,7 +86,7 @@ class _RecipeListState extends State<RecipeList> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 5.0),
                     child: Container(
-                      height: 125.0,
+                      height: 145.0,
                       child: ListView(children: [
                         Text(
                             'Ingredientes: ' +
@@ -102,7 +102,7 @@ class _RecipeListState extends State<RecipeList> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 10.0),
                     child: Container(
-                      height: 140.0,
+                      height: 232.0,
                       child: ListView(
                         children: [
                           Text(
