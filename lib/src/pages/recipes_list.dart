@@ -38,7 +38,7 @@ class _RecipeListState extends State<RecipeList> {
                               color: Theme.of(context).canvasColor),
                           child: ClipOval(
                               child: widget.recipes.imagen == null
-                                  ? Image.asset("assets/images/user.png")
+                                  ? Image.asset("assets/images/planta.png")
                                   : Image.network(
                                       widget.recipes.imagen.toString())),
                         ),
