@@ -77,7 +77,7 @@ class _RecipeListState extends State<RecipeList> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Categoria: ' + widget.recipes.category.toString(),
+                      Text(widget.recipes.category.toString(),
                           style: TextStyle(fontSize: 20.0, color: Colors.grey)),
                       Container(height: 25.0, color: Colors.grey),
                     ],
