@@ -26,7 +26,9 @@ class HerbaFriendCard extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 title: Text(recipes.name.toString()),
-                leading: Icon(Icons.grass),
+                leading: recipes.imagen == null
+                    ? Image.asset("assets/images/planta.png")
+                    : Image.network(recipes.imagen.toString()),
               )
             ],
           ),
