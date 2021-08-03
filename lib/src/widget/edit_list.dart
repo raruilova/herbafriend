@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/personal_list.dart';
+import 'package:herbafriend/src/providers/db_provider.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
 import 'package:provider/provider.dart';
 
-class RegisterList extends StatefulWidget {
-  RegisterList({Key? key}) : super(key: key);
+class EditList extends StatefulWidget {
+  EditList({Key? key}) : super(key: key);
+   
+
 
   @override
-  _RegisterListState createState() => _RegisterListState();
+  _EditListState createState() => _EditListState();
 }
 
-
-class _RegisterListState extends State<RegisterList> {
-  
+class _EditListState extends State<EditList> {
   final formKey = GlobalKey<FormState>();
   late PersonalList _listelement;
   List<String> _typesElement = ['Revision', 'Recordatorio'];
@@ -21,9 +22,8 @@ class _RegisterListState extends State<RegisterList> {
   void initState() {
     super.initState();
     _typeValue = _typesElement.elementAt(0);
-    _listelement = PersonalList.create("", "", _typeValue == 'Revision');
+    _listelement = PersonalList.update("", "", _typeValue == 'Revision');
   }
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -112,20 +112,14 @@ class _RegisterListState extends State<RegisterList> {
                          
 
                           formKey.currentState!.save();
-                          final personalListProvider =
-                              Provider.of<PersonalListProvider>(context,
-                                  listen: false);
-                          personalListProvider
-                              .addElement(
-                                  _listelement.name, _listelement.description, _listelement.active)
-                              .then((value)  {
-                                    _listelement = value;
+                          DBProvider.db.updateList(PersonalList(name: _listelement.name, description: _listelement.description, active: _listelement.active)).then((value)  {
+                                    
                                     formKey.currentState!.reset();
                                    
                                     setState(() {
                                     });
                                     Navigator.pop(context);
-                                  });
+                          });
                         },
                         child: Text('Guardar')
                   

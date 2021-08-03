@@ -25,7 +25,8 @@ class DBProvider {
         CREATE TABLE personalList(
           id  INTEGER PRIMARY KEY,
           name TEXT,          
-          description TEXT
+          description TEXT,
+          active BOOLEAN
         )      
       ''');
     });
@@ -43,5 +44,23 @@ class DBProvider {
     return result.isNotEmpty
         ? result.map((t) => PersonalList.fromJson(t)).toList()
         : [];
+  }
+  //update 
+  Future<int> updateList(PersonalList updateElement) async {
+    //referencia base de datos
+    final db = await database;
+    //actualiza la tabla 
+    return db.update(
+      'personalList', updateElement.toJson(),
+      where: '${updateElement.id} = ?',
+      whereArgs:[updateElement.id]
+    );
+  }
+  //delete 
+  Future<int> deleteList(int? id) async {
+    return await database.delete('personalList',
+    where: 'id = ?',
+    whereArgs: [id]
+    );
   }
 }

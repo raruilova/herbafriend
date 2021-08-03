@@ -7,14 +7,23 @@ import 'db_provider.dart';
 class PersonalListProvider extends ChangeNotifier {
   List<PersonalList> elements = [];
 
-  Future<PersonalList> addElement(String name, String description) async {
-    PersonalList element = PersonalList(name: name, description: description);
+  Future<PersonalList> addElement(String name, String description, bool active) async {
+    PersonalList element = PersonalList(name: name, description: description, active: active);
     final id = await DBProvider.db.insert(element);
     element.id = id;
     this.elements.add(element);
     notifyListeners();
     return element;
   }
+  Future<PersonalList> updateElement(String name, String description, bool active) async {
+    PersonalList element = PersonalList(name: name, description: description, active: active);
+    final id = await DBProvider.db.updateList(element);
+    element.id = id;
+    this.elements.add(element);
+    notifyListeners();
+    return element;
+  }
+
 
   loadElements() async {
     final travelsQuery = await DBProvider.db.list();
