@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:herbafriend/src/providers/db_provider.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
-import 'package:herbafriend/src/widget/edit_list.dart';
 import 'package:provider/provider.dart';
 import 'package:herbafriend/src/pages/register_list.dart';
 
@@ -45,7 +43,7 @@ class _YourListWidgetState extends State<YourListWidget> {
           ),
           SizedBox(height: 40.0),
           Container(
-            height: MediaQuery.of(context).size.height - 185.0,
+            height: MediaQuery.of(context).size.height - 280.0,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(topLeft: Radius.circular(75.0)),
@@ -56,18 +54,14 @@ class _YourListWidgetState extends State<YourListWidget> {
               itemCount: personalListProvider.elements.length,
               itemBuilder: (_, index) => Padding(
                   padding: EdgeInsets.only(top: 35.0),
+                  
                   child: Container(
-                      child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    margin: EdgeInsets.all(5),
-                    elevation: 10,
                     child: Column(
                       children: [
                         Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          margin: EdgeInsets.all(15),
+                          margin: EdgeInsets.only(left: 15, right: 15),
                           elevation: 10,
                           child: Column(
                             children: [
@@ -85,29 +79,12 @@ class _YourListWidgetState extends State<YourListWidget> {
                                 child: Text(personalListProvider
                                     .elements[index].description),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  FlatButton(
-                                      onPressed: () => {
-                                        Navigator.push(context, 
-                                        MaterialPageRoute(builder: (context) => EditList())
-                                        )
-                                      },
-                                      child: Text('Editar')),
-                                  FlatButton(
-                                      onPressed: () => {
-                                        DBProvider.db.deleteList(personalListProvider.elements[index].id)
-                                      },
-                                      child: Text('Eliminar'))
-                                ],
-                              )
                             ],
                           ),
                         ),
                       ],
                     ),
-                  ))),
+                  )),
             ),
           ),
         ],
