@@ -111,8 +111,8 @@ class _RegisterState extends State<Register> {
                       _recipes.name = value.toString();
                     },
                     validator: (value) {
-                      if (value!.length < 1) {
-                        return "Debe ingresar un mensaje con al menos 25 caracteres";
+                      if (value!.length < 5) {
+                        return "Debe ingresar un mensaje con al menos 5 caracteres";
                       } else {
                         return null; //Validación se cumple al retorna null
                       }
@@ -133,8 +133,8 @@ class _RegisterState extends State<Register> {
                       _recipes.ingredients = value.toString();
                     },
                     validator: (value) {
-                      if (value!.length < 1) {
-                        return "Debe ingresar un mensaje con al menos 25 caracteres";
+                      if (value!.length < 5) {
+                        return "Debe ingresar un mensaje con al menos 5 caracteres";
                       } else {
                         return null; //Validación se cumple al retorna null
                       }

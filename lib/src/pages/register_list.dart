@@ -68,6 +68,13 @@ class _RegisterListState extends State<RegisterList> {
                       onSaved: (value) {
                         _listelement.name = value.toString();
                       },
+                      validator: (value) {
+                        if (value!.length < 5) {
+                          return "Debe ingresar un mensaje con al menos 5 caracteres";
+                        } else {
+                          return null; //Validación se cumple al retorna null
+                        }
+                      },
                       decoration:
                           InputDecoration(filled: true, labelText: 'Nombre'),
                     ),
@@ -79,6 +86,13 @@ class _RegisterListState extends State<RegisterList> {
                       initialValue: _listelement.description,
                       onSaved: (value) {
                         _listelement.description = value.toString();
+                      },
+                      validator: (value) {
+                        if (value!.length < 5) {
+                          return "Debe ingresar un mensaje con al menos 5 caracteres";
+                        } else {
+                          return null; //Validación se cumple al retorna null
+                        }
                       },
                       decoration: InputDecoration(
                           filled: true, labelText: 'Descripcion'),
