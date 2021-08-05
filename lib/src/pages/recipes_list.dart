@@ -16,7 +16,7 @@ class _RecipeListState extends State<RecipeList> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Detalles'),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
           child: Stack(
@@ -44,7 +44,6 @@ class _RecipeListState extends State<RecipeList> {
                         ),
                       ],
                     ),
-                    Standard.titleToForm(context, "Detalle de Recetas"),
                     _detalles()
                   ],
                 ),
@@ -89,12 +88,10 @@ class _RecipeListState extends State<RecipeList> {
                       height: 145.0,
                       child: ListView(children: [
                         Text(
-                            'Ingredientes: ' +
-                                '\n\n' +
-                                widget.recipes.ingredients.toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                            )),
+                          'Ingredientes: ' +
+                              '\n\n' +
+                              widget.recipes.ingredients.toString(),
+                        ),
                       ]),
                     ),
                   ),
@@ -106,12 +103,10 @@ class _RecipeListState extends State<RecipeList> {
                       child: ListView(
                         children: [
                           Text(
-                              'Preparacion: ' +
-                                  '\n\n' +
-                                  widget.recipes.preparation.toString(),
-                              style: TextStyle(
-                                color: Colors.black,
-                              ))
+                            'Preparacion: ' +
+                                '\n\n' +
+                                widget.recipes.preparation.toString(),
+                          )
                         ],
                       ),
                     ),

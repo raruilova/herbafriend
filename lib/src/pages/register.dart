@@ -6,6 +6,7 @@ import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart';
 import 'package:herbafriend/src/utils/standart.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
@@ -26,12 +27,14 @@ class _RegisterState extends State<Register> {
   late File _image;
   bool _imageSelected = false;
   final _picker = ImagePicker();
+  bool? darkModePrefs;
 
   @override
   void initState() {
     super.initState();
     print("inicio del Estado");
     _loadResult();
+    _loadDarkModePrefs();
     _recipes = Recipes.create("", "", "", "Estomago");
   }
 
@@ -39,7 +42,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Recetas'),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
           child: Stack(
@@ -64,7 +67,11 @@ class _RegisterState extends State<Register> {
                                 child: ElevatedButton(
                                   onPressed: _takeImage,
                                   child: Icon(Icons.camera_alt),
-                                  style: Standard.buttonStandardStyle(context),
+                                  style: Standard.buttonStandardStyle(
+                                      context,
+                                      darkModePrefs == false
+                                          ? Colors.green
+                                          : Colors.tealAccent),
                                 ),
                               ),
                               Tooltip(
@@ -72,7 +79,11 @@ class _RegisterState extends State<Register> {
                                 child: ElevatedButton(
                                   onPressed: _pickImage,
                                   child: Icon(Icons.image),
-                                  style: Standard.buttonStandardStyle(context),
+                                  style: Standard.buttonStandardStyle(
+                                      context,
+                                      darkModePrefs == false
+                                          ? Colors.green
+                                          : Colors.tealAccent),
                                 ),
                               )
                             ],
@@ -125,7 +136,11 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
-                  Divider(),
+                  Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
                   TextFormField(
                     maxLines: 4,
                     initialValue: _recipes.ingredients,
@@ -147,7 +162,11 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
-                  Divider(),
+                  Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
                   TextFormField(
                     maxLines: 4,
                     initialValue: _recipes.preparation,
@@ -170,7 +189,11 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
-                  Divider(),
+                  Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
                   //TextField(
                   //  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
                   //  decoration: InputDecoration(
@@ -201,8 +224,16 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
-                  Divider(),
+                  Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent),
                       onPressed: () async {
                         //Recipes data = await submit
                         if (_formKey.currentState!.validate()) {
@@ -227,8 +258,17 @@ class _RegisterState extends State<Register> {
                       },
                       child: Text(
                         'Agregar',
-                        style: TextStyle(fontSize: 20),
-                      ))
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: darkModePrefs == false
+                                ? Colors.white
+                                : Colors.black),
+                      )),
+                  Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
                 ],
               ),
             ),
@@ -280,6 +320,11 @@ class _RegisterState extends State<Register> {
       print('No image selected.');
       _imageSelected = false;
     }
+    setState(() {});
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
     setState(() {});
   }
 }
