@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:herbafriend/src/pages/register_list.dart';
 
@@ -12,14 +13,20 @@ class YourListWidget extends StatefulWidget {
 
 class _YourListWidgetState extends State<YourListWidget> {
   int _selectedIndex = 0;
+  bool? darkModePrefs;
 
   @override
+  void initState() {
+    super.initState();
+    _loadDarkModePrefs();
+  }
+
   Widget build(BuildContext context) {
     final personalListProvider =
         Provider.of<PersonalListProvider>(context, listen: true);
     personalListProvider.loadElements();
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).primaryColor,
       body: ListView(
         children: <Widget>[
           Padding(
@@ -45,7 +52,7 @@ class _YourListWidgetState extends State<YourListWidget> {
           Container(
             height: MediaQuery.of(context).size.height - 280.0,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: darkModePrefs == false ? Colors.white : Colors.grey[800],
               borderRadius: BorderRadius.only(topLeft: Radius.circular(75.0)),
             ),
             child: ListView.builder(
@@ -54,7 +61,6 @@ class _YourListWidgetState extends State<YourListWidget> {
               itemCount: personalListProvider.elements.length,
               itemBuilder: (_, index) => Padding(
                   padding: EdgeInsets.only(top: 35.0),
-                  
                   child: Container(
                     child: Column(
                       children: [
@@ -102,5 +108,10 @@ class _YourListWidgetState extends State<YourListWidget> {
             )
           : null,
     );
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {});
   }
 }

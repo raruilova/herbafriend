@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/personal_list.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class RegisterList extends StatefulWidget {
@@ -12,12 +13,14 @@ class RegisterList extends StatefulWidget {
 
 class _RegisterListState extends State<RegisterList> {
   final formKey = GlobalKey<FormState>();
+  bool? darkModePrefs;
   late PersonalList _listelement;
   List<String> _typesElement = ['Revision', 'Recordatorio'];
   String _typeValue = "";
   @override
   void initState() {
     super.initState();
+    _loadDarkModePrefs();
     _typeValue = _typesElement.elementAt(0);
     _listelement = PersonalList.create("", "", _typeValue == 'Revision');
   }
@@ -26,7 +29,7 @@ class _RegisterListState extends State<RegisterList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registro'),
-        backgroundColor: Colors.green,
+        backgroundColor: darkModePrefs == false ? Colors.green : Colors.black,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -53,7 +56,9 @@ class _RegisterListState extends State<RegisterList> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/logo.png'),
+                          image: darkModePrefs == false
+                              ? AssetImage('assets/images/logo.png')
+                              : AssetImage('assets/images/logodark.png'),
                           fit: BoxFit.fill)),
                 )
               ],
@@ -135,12 +140,27 @@ class _RegisterListState extends State<RegisterList> {
                             Navigator.pop(context);
                           });
                         },
-                        child: Text('Guardar'))
+                        style: ElevatedButton.styleFrom(
+                            primary: darkModePrefs == false
+                                ? Colors.green
+                                : Colors.tealAccent),
+                        child: Text(
+                          'Guardar',
+                          style: TextStyle(
+                              color: darkModePrefs == false
+                                  ? Colors.white
+                                  : Colors.black),
+                        ))
                   ],
                 )),
           ],
         ),
       ),
     );
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {});
   }
 }
