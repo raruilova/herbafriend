@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:herbafriend/src/pages/splash.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
 import 'package:herbafriend/src/providers/app_provider.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
-import 'package:herbafriend/src/widget/login_widget.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
                     ? Brightness.dark
                     : Brightness.light,
                 primarySwatch: Colors.green),
-            home: Login(),
+            home: SplashScreen(),
           );
         }));
   }
