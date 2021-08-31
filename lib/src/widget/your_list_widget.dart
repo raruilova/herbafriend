@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
@@ -64,28 +65,30 @@ class _YourListWidgetState extends State<YourListWidget> {
                   child: Container(
                     child: Column(
                       children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: EdgeInsets.only(left: 15, right: 15),
-                          elevation: 10,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text(
-                                    personalListProvider.elements[index].name),
-                                subtitle:
-                                    personalListProvider.elements[index].active
-                                        ? Text('Revision')
-                                        : Text('Recordatorio'),
-                                leading: Icon(Icons.grass),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Text(personalListProvider
-                                    .elements[index].description),
-                              ),
-                            ],
+                        FadeInUp(
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            margin: EdgeInsets.only(left: 15, right: 15),
+                            elevation: 10,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  title: Text(personalListProvider
+                                      .elements[index].name),
+                                  subtitle: personalListProvider
+                                          .elements[index].active
+                                      ? Text('Revision')
+                                      : Text('Recordatorio'),
+                                  leading: Icon(Icons.grass),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Text(personalListProvider
+                                      .elements[index].description),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
