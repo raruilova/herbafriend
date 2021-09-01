@@ -10,6 +10,8 @@ import 'package:herbafriend/src/utils/standart.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../local_notifications.dart';
+
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
 
@@ -242,6 +244,9 @@ class _RegisterState extends State<Register> {
                               ? Colors.green
                               : Colors.tealAccent),
                       onPressed: () async {
+                        final Notifications noti = new Notifications();
+                        noti.init();
+                        noti.showNotification("Nueva Receta agregada");
                         //Recipes data = await submit
                         if (_formKey.currentState!.validate()) {
                           // If the form is valid, display a snackbar. In the real world,

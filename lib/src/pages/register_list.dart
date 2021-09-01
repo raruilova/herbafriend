@@ -1,5 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:herbafriend/local_notifications.dart';
+
 import 'package:herbafriend/src/model/personal_list.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
@@ -129,7 +131,14 @@ class _RegisterListState extends State<RegisterList> {
                           if (!formKey.currentState!.validate()) return;
 
                           setState(() {});
+                          final Notifications noti = new Notifications();
+                          noti.init();
 
+                          _typeValue == "Revision"
+                              ? noti.showNotification(
+                                  "Se ha creado una nueva Revision")
+                              : noti.showNotification(
+                                  "Se he creado un nuevo Recordatorio");
                           formKey.currentState!.save();
                           final personalListProvider =
                               Provider.of<PersonalListProvider>(context,
