@@ -248,7 +248,7 @@ class _RegisterState extends State<Register> {
                           _recipes.imagen =
                               await _recipeService.upImage(_image);
                         }
-
+                        
                         setState(() {
                           _recipeService.sendRecipe(_recipes).then((value) {
                             _formKey.currentState!.reset();
