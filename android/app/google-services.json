@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822898310606",
+    "project_id": "herbafriend-f937e",
+    "storage_bucket": "herbafriend-f937e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822898310606:android:fbd0206de6c62dc025bf9f",
+        "android_client_info": {
+          "package_name": "com.example.herbafriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822898310606-qglm4jsnq42elktq7ic0jklc42au9m64.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzZndtDHWYNFzUu5HgIlvYyKO8OmMXQfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822898310606-qglm4jsnq42elktq7ic0jklc42au9m64.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
