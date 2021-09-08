@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
@@ -8,6 +9,8 @@ import 'package:herbafriend/src/service/herfriend_service.dart';
 import 'package:herbafriend/src/utils/standart.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../local_notifications.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -116,22 +119,24 @@ class _RegisterState extends State<Register> {
             child: Center(
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    initialValue: _recipes.name,
-                    onSaved: (value) {
-                      _recipes.name = value.toString();
-                    },
-                    validator: (value) {
-                      if (value!.length < 5) {
-                        return "Debe ingresar un mensaje con al menos 5 caracteres";
-                      } else {
-                        return null; //Validación se cumple al retorna null
-                      }
-                    },
-                    style:
-                        TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.yard), labelText: 'Nombre'),
+                  FadeInRight(
+                    child: TextFormField(
+                      initialValue: _recipes.name,
+                      onSaved: (value) {
+                        _recipes.name = value.toString();
+                      },
+                      validator: (value) {
+                        if (value!.length < 5) {
+                          return "Debe ingresar un mensaje con al menos 5 caracteres";
+                        } else {
+                          return null; //Validación se cumple al retorna null
+                        }
+                      },
+                      style:
+                          TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.yard), labelText: 'Nombre'),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
@@ -141,23 +146,25 @@ class _RegisterState extends State<Register> {
                         ? Colors.white
                         : Colors.grey[800],
                   ),
-                  TextFormField(
-                    maxLines: 4,
-                    initialValue: _recipes.ingredients,
-                    onSaved: (value) {
-                      _recipes.ingredients = value.toString();
-                    },
-                    validator: (value) {
-                      if (value!.length < 5) {
-                        return "Debe ingresar un mensaje con al menos 5 caracteres";
-                      } else {
-                        return null; //Validación se cumple al retorna null
-                      }
-                    },
-                    style:
-                        TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.list), labelText: 'Ingrediente'),
+                  FadeInRight(
+                    child: TextFormField(
+                      maxLines: 4,
+                      initialValue: _recipes.ingredients,
+                      onSaved: (value) {
+                        _recipes.ingredients = value.toString();
+                      },
+                      validator: (value) {
+                        if (value!.length < 5) {
+                          return "Debe ingresar un mensaje con al menos 5 caracteres";
+                        } else {
+                          return null; //Validación se cumple al retorna null
+                        }
+                      },
+                      style:
+                          TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.list), labelText: 'Ingrediente'),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
@@ -167,24 +174,26 @@ class _RegisterState extends State<Register> {
                         ? Colors.white
                         : Colors.grey[800],
                   ),
-                  TextFormField(
-                    maxLines: 4,
-                    initialValue: _recipes.preparation,
-                    onSaved: (value) {
-                      _recipes.preparation = value.toString();
-                    },
-                    validator: (value) {
-                      if (value!.length < 1) {
-                        return "Debe ingresar un mensaje con al menos 25 caracteres";
-                      } else {
-                        return null; //Validación se cumple al retorna null
-                      }
-                    },
-                    style:
-                        TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.emoji_food_beverage),
-                        labelText: 'Preparacion'),
+                  FadeInRight(
+                    child: TextFormField(
+                      maxLines: 4,
+                      initialValue: _recipes.preparation,
+                      onSaved: (value) {
+                        _recipes.preparation = value.toString();
+                      },
+                      validator: (value) {
+                        if (value!.length < 1) {
+                          return "Debe ingresar un mensaje con al menos 25 caracteres";
+                        } else {
+                          return null; //Validación se cumple al retorna null
+                        }
+                      },
+                      style:
+                          TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.emoji_food_beverage),
+                          labelText: 'Preparacion'),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
@@ -235,6 +244,9 @@ class _RegisterState extends State<Register> {
                               ? Colors.green
                               : Colors.tealAccent),
                       onPressed: () async {
+                        final Notifications noti = new Notifications();
+                        noti.init();
+                        noti.showNotification("Nueva Receta agregada");
                         //Recipes data = await submit
                         if (_formKey.currentState!.validate()) {
                           // If the form is valid, display a snackbar. In the real world,

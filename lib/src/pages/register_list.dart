@@ -1,4 +1,7 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:herbafriend/local_notifications.dart';
+
 import 'package:herbafriend/src/model/personal_list.dart';
 import 'package:herbafriend/src/providers/personalList_provider.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
@@ -68,40 +71,44 @@ class _RegisterListState extends State<RegisterList> {
                 key: formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      initialValue: _listelement.name,
-                      onSaved: (value) {
-                        _listelement.name = value.toString();
-                      },
-                      validator: (value) {
-                        if (value!.length < 5) {
-                          return "Debe ingresar un mensaje con al menos 5 caracteres";
-                        } else {
-                          return null; //Validación se cumple al retorna null
-                        }
-                      },
-                      decoration:
-                          InputDecoration(filled: true, labelText: 'Nombre'),
+                    FadeInRight(
+                      child: TextFormField(
+                        initialValue: _listelement.name,
+                        onSaved: (value) {
+                          _listelement.name = value.toString();
+                        },
+                        validator: (value) {
+                          if (value!.length < 5) {
+                            return "Debe ingresar un mensaje con al menos 5 caracteres";
+                          } else {
+                            return null; //Validación se cumple al retorna null
+                          }
+                        },
+                        decoration:
+                            InputDecoration(filled: true, labelText: 'Nombre'),
+                      ),
                     ),
                     SizedBox(
                       height: 12.0,
                     ),
-                    TextFormField(
-                      maxLines: 2,
-                      initialValue: _listelement.description,
-                      onSaved: (value) {
-                        _listelement.description = value.toString();
-                      },
-                      validator: (value) {
-                        if (value!.length < 5) {
-                          return "Debe ingresar un mensaje con al menos 5 caracteres";
-                        } else {
-                          return null; //Validación se cumple al retorna null
-                        }
-                      },
-                      decoration: InputDecoration(
-                          filled: true, labelText: 'Descripcion'),
-                      //obscureText: true,
+                    FadeInRight(
+                      child: TextFormField(
+                        maxLines: 2,
+                        initialValue: _listelement.description,
+                        onSaved: (value) {
+                          _listelement.description = value.toString();
+                        },
+                        validator: (value) {
+                          if (value!.length < 5) {
+                            return "Debe ingresar un mensaje con al menos 5 caracteres";
+                          } else {
+                            return null; //Validación se cumple al retorna null
+                          }
+                        },
+                        decoration: InputDecoration(
+                            filled: true, labelText: 'Descripcion'),
+                        //obscureText: true,
+                      ),
                     ),
                     Column(
                         children: _typesElement
@@ -124,7 +131,14 @@ class _RegisterListState extends State<RegisterList> {
                           if (!formKey.currentState!.validate()) return;
 
                           setState(() {});
+                          final Notifications noti = new Notifications();
+                          noti.init();
 
+                          _typeValue == "Revision"
+                              ? noti.showNotification(
+                                  "Se ha creado una nueva Revision")
+                              : noti.showNotification(
+                                  "Se he creado un nuevo Recordatorio");
                           formKey.currentState!.save();
                           final personalListProvider =
                               Provider.of<PersonalListProvider>(context,
