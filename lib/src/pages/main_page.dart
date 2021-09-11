@@ -1,10 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/pages/register.dart';
 import 'package:herbafriend/src/providers/app_provider.dart';
-import 'package:herbafriend/src/service/category_service.dart';
 import 'package:herbafriend/src/utils/enums.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 import 'package:herbafriend/src/widget/login_widget.dart';
@@ -22,15 +20,11 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   bool? darkModePrefs;
 
-  final CategoryService _service = CategoryService();
-
-  List<CategoryRecipe> _result = [];
-
   @override
   void initState() {
     super.initState();
     print("inicio del Estado");
-    _loadResult();
+
     _loadDarkModePrefs();
   }
 
@@ -61,14 +55,6 @@ class _MainPageState extends State<MainPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-          ),
-          Column(
-            children: _result
-                .map((e) => ListTile(
-                      onTap: () {},
-                      title: Text(e.name.toString()),
-                    ))
-                .toList(),
           ),
           Divider(
             color: Colors.white,
@@ -149,14 +135,6 @@ class _MainPageState extends State<MainPage> {
                   BottomNavigationBarItem(icon: Icon(e.icon), label: e.label))
               .toList()),
     );
-  }
-
-  _loadResult() {
-    _service.getCategory().then((value) {
-      print(value);
-      _result = value;
-      setState(() {});
-    });
   }
 
   _loadDarkModePrefs() async {
