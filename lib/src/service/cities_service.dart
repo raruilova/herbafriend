@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:herbafriend/src/model/category.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:herbafriend/src/model/cities_model.dart';
 

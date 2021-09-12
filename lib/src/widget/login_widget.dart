@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:herbafriend/src/pages/main_page.dart';
 import 'package:herbafriend/src/pages/usuario_register.dart';
-import 'package:herbafriend/src/service/user_service.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -14,7 +13,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final UserService _userService = UserService();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
