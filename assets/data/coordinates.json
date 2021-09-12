@@ -1,0 +1,170 @@
+[
+  {
+    "nombre": "Cuenca",
+    "provincia": "Azuay",
+    "longitud": -79.00453,
+    "latitud": -2.90055,
+    "habitantes": "712.127"
+  },
+  {
+    "nombre": "Guaranda",
+    "provincia": "Bolivar",
+    "longitud": -79.00098,
+    "latitud": -1.59263,
+    "habitantes": "183.641"
+  },
+  {
+    "nombre": "Azogues",
+    "provincia": "Cañar",
+    "longitud": -78.8486,
+    "latitud": -2.73969,
+    "habitantes": "225.184"
+  },
+  {
+    "nombre": "Tulcán",
+    "provincia": "Carchi",
+    "longitud": -77.71727,
+    "latitud": 0.81187,
+    "habitantes": "164.524"
+  },
+  {
+    "nombre": "Riobamba",
+    "provincia": "Chimborazo",
+    "longitud": -78.64712,
+    "latitud": -1.67098,
+    "habitantes": "458.581"
+  },
+  {
+    "nombre": "Latacunga",
+    "provincia": "Cotopaxi",
+    "longitud": -78.61554,
+    "latitud": -0.93521,
+    "habitantes": "409.205"
+  },
+  {
+    "nombre": "Machala",
+    "provincia": "El Oro",
+    "longitud": -79.96053,
+    "latitud": -3.25861,
+    "habitantes": "600.659"
+  },
+  {
+    "nombre": "Esmeraldas",
+    "provincia": "Esmeraldas",
+    "longitud": -79.65397,
+    "latitud": 0.9592,
+    "habitantes": "534.092"
+  },
+  {
+    "nombre": "Puerto Baquerizo Moreno",
+    "provincia": "Galápagos",
+    "longitud": -78.73333,
+    "latitud": 0.35,
+    "habitantes": "25.124"
+  },
+  {
+    "nombre": "Guayaquil",
+    "provincia": "Guayas",
+    "longitud": -79.90795,
+    "latitud": -2.20584,
+    "habitantes": "3.645 483"
+  },
+  {
+    "nombre": "Ibarra",
+    "provincia": "Imbabura",
+    "longitud": -78.12233,
+    "latitud": 0.35171,
+    "habitantes": "398.244"
+  },
+  {
+    "nombre": "Loja",
+    "provincia": "Loja",
+    "longitud": -79.20422,
+    "latitud": -3.99313,
+    "habitantes": "448.966"
+  },
+  {
+    "nombre": "Babahoyo",
+    "provincia": "Los Rios",
+    "longitud": -79.53443,
+    "latitud": -1.80217,
+    "habitantes": "778.115"
+  },
+  {
+    "nombre": "Portoviejo",
+    "provincia": "Manabí",
+    "longitud": -80.45445,
+    "latitud": -1.05458,
+    "habitantes": "1.369.780"
+  },
+  {
+    "nombre": "Macas",
+    "provincia": "Morona Santiago",
+    "longitud": -78.11135,
+    "latitud": -2.30868,
+    "habitantes": "147.940"
+  },
+  {
+    "nombre": "Tena",
+    "provincia": "Napo",
+    "longitud": -77.81286,
+    "latitud": -0.9938,
+    "habitantes": "103.697"
+  },
+  {
+    "nombre": "Francisco de Orellana",
+    "provincia": "Orellana",
+    "longitud": -75.666667,
+    "latitud": -0.933333,
+    "habitantes": "136.396"
+  },
+  {
+    "nombre": "Puyo",
+    "provincia": "Pastaza",
+    "longitud": -78.00257,
+    "latitud": -1.48369,
+    "habitantes": "83.933"
+  },
+  {
+    "nombre": "Quito",
+    "provincia": "Pichincha",
+    "longitud": -78.52495,
+    "latitud": -0.22985,
+    "habitantes": "2.576.287"
+  },
+  {
+    "nombre": "Santa Elena",
+    "provincia": "Santa Elena",
+    "longitud": -80.85873,
+    "latitud": -2.22622,
+    "habitantes": "308.693"
+  },
+  {
+    "nombre": "Santo Domingo",
+    "provincia": "Santo Domingo de los Tsáchilas",
+    "longitud": -79.17536,
+    "latitud": -0.25305,
+    "habitantes": "368.013"
+  },
+  {
+    "nombre": "Nueva Loja",
+    "provincia": "Sucumbíos",
+    "longitud": -76.883333,
+    "latitud": -0.083333,
+    "habitantes": "176.472"
+  },
+  {
+    "nombre": "Ambato",
+    "provincia": "Tungurahua",
+    "longitud": -78.61675,
+    "latitud": -1.24908,
+    "habitantes": "504.583"
+  },
+  {
+    "nombre": "Zamora",
+    "provincia": "Zamora Chinchipe",
+    "longitud": -5.74456,
+    "latitud": 41.50633,
+    "habitantes": "91.376"
+  }
+]

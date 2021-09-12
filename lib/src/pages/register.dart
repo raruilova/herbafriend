@@ -1,12 +1,18 @@
+import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:herbafriend/src/model/category.dart';
+import 'package:herbafriend/src/model/cities_model.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/service/category_service.dart';
+import 'package:herbafriend/src/service/cities_service.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart';
 import 'package:herbafriend/src/utils/standart.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
+import 'package:herbafriend/src/widget/view_map.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
@@ -19,9 +25,12 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final CategoryService _service = CategoryService();
   final HerbaFriendService _recipeService = HerbaFriendService();
+  final CitiesService _citiesService = CitiesService();
   //Future<Recipes>? _futureRecipe;
   late Recipes _recipes;
   List<CategoryRecipe> _result = [];
+
+  List<Cities> _cities = [];
 
   final _formKey = GlobalKey<FormState>();
   late File _image;
@@ -29,11 +38,13 @@ class _RegisterState extends State<Register> {
   final _picker = ImagePicker();
   bool? darkModePrefs;
 
+  String city = 'Riobamba';
   @override
   void initState() {
     super.initState();
     print("inicio del Estado");
     _loadResult();
+    _loadCities();
     _loadDarkModePrefs();
     _recipes = Recipes.create("", "", "", "Estomago");
   }
@@ -224,7 +235,60 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
+                  Container(
+                      child: Column(
+                    children: [
+                      DropdownButton <String>(
+                        value: city,
+                        onChanged: (String? newvalue) {
+                          setState(
+                            () {
+                               city = newvalue!;
+                            },
+                          );
+                        },
+                        items: _cities.map<DropdownMenuItem<String>>(
+                            (Cities value) {
+                          return DropdownMenuItem<String>(
+                            value: value.nombre.toString(),
+                            child: Text(value.nombre.toString()),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  )),
                   Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
+                  //GoogleMap(
+                  //  initialCameraPosition: _kGooglePlex,
+                  //  onMapCreated: (GoogleMapController controller) {
+                  //    _controller.complete(controller);
+                  //  },
+                  //),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent),
+                      onPressed: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewMap(),
+                                ));
+                      },
+                      child: Text(
+                        'Mapa',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: darkModePrefs == false
+                                ? Colors.white
+                                : Colors.black),
+                      )),
+                       Divider(
                     color: darkModePrefs == false
                         ? Colors.white
                         : Colors.grey[800],
@@ -288,7 +352,13 @@ class _RegisterState extends State<Register> {
       setState(() {});
     });
   }
-
+  _loadCities(){
+    _citiesService.getCities().then((value) {
+      print(value.toString());
+      _cities = value;
+      setState(() {});
+    });
+  }
   _imageDefault() {
     return Container(
       width: 100.0,
