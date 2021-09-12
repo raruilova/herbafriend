@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/utils/standart.dart';
+import 'package:herbafriend/src/utils/user_shared_preferences.dart';
+import 'package:herbafriend/src/widget/view_map.dart';
 
 class RecipeList extends StatefulWidget {
   final Recipes recipes;
@@ -11,6 +13,12 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
+  bool? darkModePrefs;
+  void initState() {
+    super.initState();
+    print("inicio del Estado");
+    _loadDarkModePrefs();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +107,7 @@ class _RecipeListState extends State<RecipeList> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 10.0),
                     child: Container(
-                      height: 232.0,
+                      height: 200.0,
                       child: ListView(
                         children: [
                           Text(
@@ -110,45 +118,35 @@ class _RecipeListState extends State<RecipeList> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: darkModePrefs == false
+                              ? Colors.green
+                              : Colors.tealAccent),
+                      onPressed: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewMap(),
+                                ));
+                      },
+                      child: Text(
+                        'Mapa',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: darkModePrefs == false
+                                ? Colors.white
+                                : Colors.black),
+                      )),
                 ],
               ),
             ),
           )),
     );
   }
+    _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {});
+  }
 }
-
-//Column(
-//        children: [
-//          Container(
-//            margin: EdgeInsets.only(top: 70.0),
-//          ),
-//          Text(
-//            widget.recipes.category.toString(),
-//            style: TextStyle(fontSize: 10.0),
-//          ),
-//          Text(
-//            "Ingredientes: ",
-//            style: TextStyle(
-//              fontWeight: FontWeight.bold,
-//              fontSize: 20.0,
-//            ),
-//          ),
-//          Text(
-//            widget.recipes.ingredients.toString(),
-//            style: TextStyle(fontWeight: FontWeight.bold),
-//          ),
-//          Container(
-//            margin: EdgeInsets.only(top: 20.0),
-//          ),
-//          Text(
-//            "Preparación: ",
-//            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-//          ),
-//          Text(
-//            widget.recipes.preparation.toString(),
-//            style: TextStyle(fontSize: 20.0),
-//          ),
-//        ],
-//      ),

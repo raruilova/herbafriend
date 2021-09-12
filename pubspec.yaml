@@ -41,8 +41,12 @@ dependencies:
   flutter_local_notifications: ^8.1.1+2
   rxdart: ^0.27.1
   jwt_decoder: ^2.0.1
+  google_maps_flutter: ^2.0.8
+  
 dependency_overrides:
   plugin_platform_interface: ^2.0.1
+
+  
 
 dev_dependencies:
   flutter_test:

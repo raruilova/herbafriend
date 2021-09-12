@@ -1,13 +1,17 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:herbafriend/src/model/category.dart';
+import 'package:herbafriend/src/model/cities_model.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
 import 'package:herbafriend/src/service/category_service.dart';
+import 'package:herbafriend/src/service/cities_service.dart';
 import 'package:herbafriend/src/service/herfriend_service.dart';
 import 'package:herbafriend/src/utils/standart.dart';
 import 'package:herbafriend/src/utils/user_shared_preferences.dart';
+import 'package:herbafriend/src/widget/view_map.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../local_notifications.dart';
@@ -22,9 +26,12 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final CategoryService _service = CategoryService();
   final HerbaFriendService _recipeService = HerbaFriendService();
+  final CitiesService _citiesService = CitiesService();
   //Future<Recipes>? _futureRecipe;
   late Recipes _recipes;
   List<CategoryRecipe> _result = [];
+
+  List<Cities> _cities = [];
 
   final _formKey = GlobalKey<FormState>();
   late File _image;
@@ -32,11 +39,13 @@ class _RegisterState extends State<Register> {
   final _picker = ImagePicker();
   bool? darkModePrefs;
 
+  String city = 'Riobamba';
   @override
   void initState() {
     super.initState();
     print("inicio del Estado");
     _loadResult();
+    _loadCities();
     _loadDarkModePrefs();
     _recipes = Recipes.create("", "", "", "Estomago");
   }
@@ -113,8 +122,6 @@ class _RegisterState extends State<Register> {
             border: Border.all(color: Theme.of(context).dividerColor)),
         child: Form(
           key: _formKey,
-          //height: 570.0,
-          //padding: const EdgeInsets.all(20.0),
           child: Card(
             child: Center(
               child: Column(
@@ -203,11 +210,7 @@ class _RegisterState extends State<Register> {
                         ? Colors.white
                         : Colors.grey[800],
                   ),
-                  //TextField(
-                  //  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  //  decoration: InputDecoration(
-                  //      icon: Icon(Icons.category), labelText: 'Categoria'),
-                  //),
+                  
                   Container(
                       child: Column(
                     children: [
@@ -233,7 +236,15 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
+                  
                   Divider(
+                    color: darkModePrefs == false
+                        ? Colors.white
+                        : Colors.grey[800],
+                  ),
+                  
+                  
+                       Divider(
                     color: darkModePrefs == false
                         ? Colors.white
                         : Colors.grey[800],
@@ -300,7 +311,13 @@ class _RegisterState extends State<Register> {
       setState(() {});
     });
   }
-
+  _loadCities(){
+    _citiesService.getCities().then((value) {
+      print(value.toString());
+      _cities = value;
+      setState(() {});
+    });
+  }
   _imageDefault() {
     return Container(
       width: 100.0,
