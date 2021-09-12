@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:herbafriend/src/model/category.dart';
 import 'package:herbafriend/src/model/cities_model.dart';
 import 'package:herbafriend/src/model/herbafriend_model.dart';
@@ -121,8 +119,6 @@ class _RegisterState extends State<Register> {
             border: Border.all(color: Theme.of(context).dividerColor)),
         child: Form(
           key: _formKey,
-          //height: 570.0,
-          //padding: const EdgeInsets.all(20.0),
           child: Card(
             child: Center(
               child: Column(
@@ -205,11 +201,7 @@ class _RegisterState extends State<Register> {
                         ? Colors.white
                         : Colors.grey[800],
                   ),
-                  //TextField(
-                  //  style: TextStyle(fontSize: 17.0, color: Colors.orangeAccent),
-                  //  decoration: InputDecoration(
-                  //      icon: Icon(Icons.category), labelText: 'Categoria'),
-                  //),
+                  
                   Container(
                       child: Column(
                     children: [
@@ -235,59 +227,14 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                   ),
-                  Container(
-                      child: Column(
-                    children: [
-                      DropdownButton <String>(
-                        value: city,
-                        onChanged: (String? newvalue) {
-                          setState(
-                            () {
-                               city = newvalue!;
-                            },
-                          );
-                        },
-                        items: _cities.map<DropdownMenuItem<String>>(
-                            (Cities value) {
-                          return DropdownMenuItem<String>(
-                            value: value.nombre.toString(),
-                            child: Text(value.nombre.toString()),
-                          );
-                        }).toList(),
-                      )
-                    ],
-                  )),
+                  
                   Divider(
                     color: darkModePrefs == false
                         ? Colors.white
                         : Colors.grey[800],
                   ),
-                  //GoogleMap(
-                  //  initialCameraPosition: _kGooglePlex,
-                  //  onMapCreated: (GoogleMapController controller) {
-                  //    _controller.complete(controller);
-                  //  },
-                  //),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: darkModePrefs == false
-                              ? Colors.green
-                              : Colors.tealAccent),
-                      onPressed: () {
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ViewMap(),
-                                ));
-                      },
-                      child: Text(
-                        'Mapa',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: darkModePrefs == false
-                                ? Colors.white
-                                : Colors.black),
-                      )),
+                  
+                  
                        Divider(
                     color: darkModePrefs == false
                         ? Colors.white

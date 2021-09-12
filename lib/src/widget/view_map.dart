@@ -3,6 +3,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:herbafriend/src/model/cities_model.dart';
+import 'package:herbafriend/src/service/cities_service.dart';
 
 class ViewMap extends StatefulWidget {
   ViewMap({Key? key}) : super(key: key);
@@ -12,6 +14,8 @@ class ViewMap extends StatefulWidget {
 }
 
 class _ViewMapState extends State<ViewMap> {
+  List<Cities> _cities = [];
+  final CitiesService _citiesService = CitiesService();
 
   Set<Marker> _markers = Set<Marker>();
 
@@ -25,6 +29,11 @@ class _ViewMapState extends State<ViewMap> {
   
 
   @override
+   void initState() {
+    super.initState();
+    print("inicio del Estado");
+    _loadCities();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
@@ -42,19 +51,25 @@ class _ViewMapState extends State<ViewMap> {
     );
   }
   Future<void> _goToNewYork() async {
-    double lat = 40.7128;
-    String lat1 = '40.7128';
-    double long = -74.0060;
-    double _zoom = 18.5;
-    GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newLatLngZoom(LatLng(double.parse(lat1), long), _zoom));
+     GoogleMapController controller = await _controller.future;
+    _cities.forEach((element) { 
     setState(() {
       _markers.add(
         Marker(
-            markerId: MarkerId('newyork'),
-            position: LatLng(lat, long),
+            markerId: MarkerId(element.nombre.toString()),
+            infoWindow: InfoWindow(title: element.provincia),
+            position: LatLng(element.latitud!.toDouble(), element.longitud!.toDouble()),
         ),
       );
+    });
+    });
+  }
+
+   _loadCities(){
+    _citiesService.getCities().then((value) {
+      print(value.toString());
+      _cities = value;
+      setState(() {});
     });
   }
  
